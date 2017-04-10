@@ -29,16 +29,21 @@ BuildRequires: pkgconfig(libpeas-gtk-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpulse) >= 2
 BuildRequires: pkgconfig(libpulse-mainloop-glib) >= 2
 BuildRequires: pkgconfig(libwnck-3.0) >= 3.14.0
+%if 0%{?fedora} >= 26
+BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
+%else
 BuildRequires: pkgconfig(libmutter) >= 3.18.0
+%endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
 BuildRequires: pkgconfig(upower-glib) >= 0.9.20
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(xtst)
 
 BuildRequires: vala >= 0.28
-BuildRequires: %{name}-devel
 BuildRequires: git
 BuildRequires: meson
 BuildRequires: intltool
