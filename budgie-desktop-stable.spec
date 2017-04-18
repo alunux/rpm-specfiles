@@ -9,6 +9,7 @@ Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
+Patch0: 0001-wm-Default-to-an-empty-rpath.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -106,7 +107,7 @@ Development files for the Budgie Desktop
 
 
 %prep
-%autosetup
+%autosetup -p1
 
 %build
 export LC_ALL=en_US.utf8
