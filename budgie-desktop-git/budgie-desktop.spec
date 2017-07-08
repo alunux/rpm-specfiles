@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 b07359f5c14185126ac6d780c44b25fe325c2cba
+%global commit0 917dc55dd018fdeb3d45b585b54476d8fd97c180
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -45,9 +45,10 @@ BuildRequires: pkgconfig(xtst)
 
 BuildRequires: vala >= 0.28
 BuildRequires: git
-BuildRequires: meson
+BuildRequires: meson <= 0.40.1
 BuildRequires: intltool
 BuildRequires: gtk-doc
+BuildRequires: sassc
 
 Requires: hicolor-icon-theme
 Requires: gnome-session
@@ -146,7 +147,7 @@ fi
 %files -f %{name}.lang
 %doc README.md
 %license LICENSE LICENSE.LGPL2.1
-%{_bindir}/budgie-{daemon,desktop,panel,polkit-dialog,wm}
+%{_bindir}/budgie-{daemon,desktop,panel,polkit-dialog,wm,desktop-settings}
 %config(noreplace) %{_sysconfdir}/xdg/autostart/budgie-desktop-*.desktop
 %{_libdir}/budgie-desktop/
 %{_libdir}/girepository-1.0/Budgie*.typelib
@@ -188,6 +189,18 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Fri Jul 07 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170707.b76cec0-1
+- build from commit 917dc55dd018fdeb3d45b585b54476d8fd97c180
+
+* Thu Jul 06 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170706.1529bed-1
+- build from commit 1529bedc28ca81afe2c3417f37aba0dbcc27be30
+
+* Thu Jul 06 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170706.9750901-1
+- build from commit 97509012f5024909fd6f3612f6bcfd359ee1da5e
+
+* Tue Jul 04 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170704.8e58415-1
+- build from commit 8e58415586580f5558fd35346b313963554311ef
+
 * Fri May 12 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170512.b07359f-1
 - build from commit b07359f5c14185126ac6d780c44b25fe325c2cba
 
