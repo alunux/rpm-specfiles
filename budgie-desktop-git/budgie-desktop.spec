@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 917dc55dd018fdeb3d45b585b54476d8fd97c180
+%global commit0 d3f7271cbe531025a149f06f8a7500735d4e85bf
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -111,7 +111,7 @@ Development files for the Budgie Desktop
 
 
 %prep
-%autosetup -n %{name}-%{commit0}
+%autosetup -n %{name}-%{commit0} -p1
 git clone --depth 1 git://git.gnome.org/libgnome-volume-control src/gvc
 
 %build
@@ -147,7 +147,7 @@ fi
 %files -f %{name}.lang
 %doc README.md
 %license LICENSE LICENSE.LGPL2.1
-%{_bindir}/budgie-{daemon,desktop,panel,polkit-dialog,wm,desktop-settings}
+%{_bindir}/budgie-*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/budgie-desktop-*.desktop
 %{_libdir}/budgie-desktop/
 %{_libdir}/girepository-1.0/Budgie*.typelib
@@ -189,6 +189,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Mon Jul 10 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170710.d3f7271-1
+- build from commit d3f7271cbe531025a149f06f8a7500735d4e85bf
+
 * Fri Jul 07 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170707.b76cec0-1
 - build from commit 917dc55dd018fdeb3d45b585b54476d8fd97c180
 
