@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 d3f7271cbe531025a149f06f8a7500735d4e85bf
+%global commit0 73c9f8b8ba9f52feb0c9542140697e66a10f7322
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -153,6 +153,7 @@ fi
 %{_libdir}/girepository-1.0/Budgie*.typelib
 %{_datadir}/applications/budgie-*.desktop
 %{_datadir}/gnome-session/sessions/budgie-desktop.session
+%{_datadir}/icons/hicolor/scalable/apps/budgie-desktop-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/notification-alert-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/pane-hide-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/pane-show-symbolic.svg
@@ -189,6 +190,12 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sat Jul 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170715.73c9f8b-1
+- build from commit 73c9f8b8ba9f52feb0c9542140697e66a10f7322
+
+* Fri Jul 14 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170714.254d284-1
+- build from commit 254d284cf6857e5ab3fed37cbaea4d8e09d9daad
+
 * Mon Jul 10 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170710.d3f7271-1
 - build from commit d3f7271cbe531025a149f06f8a7500735d4e85bf
 
