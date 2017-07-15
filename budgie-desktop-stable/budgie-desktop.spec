@@ -3,7 +3,7 @@
 
 Name:       budgie-desktop
 Version:    10.3.1
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0 and LGPL-2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -184,6 +184,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sat Jul 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.3.1-2
+- rebuild
+
 * Tue Apr 18 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.3.1-1
 - update spec file to build from stable branch
 

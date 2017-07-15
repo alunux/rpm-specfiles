@@ -1,0 +1,55 @@
+From f4e1b949cbbf8886c0ae12a3b528aed5a2d48ae1 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <ikey@solus-project.com>
+Date: Sat, 22 Apr 2017 21:38:45 +0100
+Subject: [PATCH 4/5] imports/natray: Enforce minimum size of 22px
+
+Anything below 22px seems to cause the na-applet icon to become "grayed"
+out, and cause regressions in multiple themes, including Adapta. So that
+they don't have to do workarounds, we'll fix it at the source.
+
+This fixes #864.
+
+Signed-off-by: Ikey Doherty <ikey@solus-project.com>
+---
+ src/imports/natray/na-tray-child.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/imports/natray/na-tray-child.c b/src/imports/natray/na-tray-child.c
+index 364f0d4..f90c4e7 100644
+--- a/src/imports/natray/na-tray-child.c
++++ b/src/imports/natray/na-tray-child.c
+@@ -104,11 +104,11 @@ na_tray_child_get_preferred_width (GtkWidget *widget,
+                                                                       minimal_width,
+                                                                       natural_width);
+ 
+-  if (*minimal_width < 16)
+-    *minimal_width = 16;
++  if (*minimal_width < 22)
++    *minimal_width = 22;
+ 
+-  if (*natural_width < 16)
+-    *natural_width = 16;
++  if (*natural_width < 22)
++    *natural_width = 22;
+ }
+ 
+ static void
+@@ -120,11 +120,11 @@ na_tray_child_get_preferred_height (GtkWidget *widget,
+                                                                        minimal_height,
+                                                                        natural_height);
+ 
+-  if (*minimal_height < 16)
+-    *minimal_height = 16;
++  if (*minimal_height < 22)
++    *minimal_height = 22;
+ 
+-  if (*natural_height < 16)
+-    *natural_height = 16;
++  if (*natural_height < 22)
++    *natural_height = 22;
+ }
+ 
+ static void
+-- 
+2.9.4
+
