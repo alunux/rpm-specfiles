@@ -28,11 +28,11 @@ Requires: libdbusmenu
 Requires: libdbusmenu-gtk2
 Requires: libdbusmenu-gtk3
 Requires: unity-gtk2-module
-Requires: unity-gtk-module
+Requires: unity-gtk-module-common
 Requires: unity-gtk3-module
 Requires: appmenu-qt
 Requires: appmenu-qt5
-Requires: appmenu-qt5-profile
+Requires: appmenu-qt5-profile.d
 
 %description
 This is Application Menu (Global Menu) plugin for Budgie Desktop.
