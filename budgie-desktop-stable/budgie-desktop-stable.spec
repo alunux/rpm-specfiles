@@ -10,10 +10,7 @@ URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
 Patch0: 0001-wm-Default-to-an-empty-rpath.patch
-Patch1: 0002-theme-For-3.18-use-GTK-widget-names-on-tab-switcher-.patch
-Patch2: 0003-theme-Rebuild-3.18-theme-for-issue-878.patch
-Patch3: 0004-imports-natray-Enforce-minimum-size-of-22px.patch
-Patch4: 0005-Fix-typo-in-meson.build.patch
+Patch1: 0005-Fix-typo-in-meson.build.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
