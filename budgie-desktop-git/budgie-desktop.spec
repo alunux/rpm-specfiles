@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 73c9f8b8ba9f52feb0c9542140697e66a10f7322
+%global commit0 7561deb17452b650b370e11fbe3a4f2ddfe9e74b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -45,7 +45,7 @@ BuildRequires: pkgconfig(xtst)
 
 BuildRequires: vala >= 0.28
 BuildRequires: git
-BuildRequires: meson <= 0.40.1
+BuildRequires: meson
 BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: sassc
@@ -157,6 +157,10 @@ fi
 %{_datadir}/icons/hicolor/scalable/actions/notification-alert-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/pane-hide-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/pane-show-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-hibernate-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-log-out-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-restart-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-suspend-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/clock-applet-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/icon-task-list-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/notifications-applet-symbolic.svg
@@ -190,6 +194,18 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sat Jul 29 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170729.7561deb-1
+- build from commit 7561deb17452b650b370e11fbe3a4f2ddfe9e74b
+
+* Fri Jul 28 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170728.8765552-1
+- build from commit 876555241ddc46fbdfa859ccce1258f80cc4eb69
+
+* Fri Jul 21 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170721.f0c9c9f-1
+- build from commit f0c9c9f1b2913e946f592680e6cfcd14713af2c0
+
+* Mon Jul 17 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170717.929f4b8-1
+- build from commit 929f4b87205bcc0a9f577e6c589b62be4a716269
+
 * Sat Jul 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170715.73c9f8b-1
 - build from commit 73c9f8b8ba9f52feb0c9542140697e66a10f7322
 

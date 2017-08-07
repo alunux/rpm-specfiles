@@ -3,7 +3,7 @@
 
 Name:       budgie-desktop
 Version:    10.3.1
-Release:    2%{?dist}
+Release:    3%{?dist}
 License:    GPL-2.0 and LGPL-2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -43,7 +43,7 @@ BuildRequires: pkgconfig(xtst)
 
 BuildRequires: vala >= 0.28
 BuildRequires: git
-BuildRequires: meson <= 0.40.1
+BuildRequires: meson
 BuildRequires: intltool
 BuildRequires: gtk-doc
 
@@ -185,6 +185,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sat Jul 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.3.1-3
+- try to rebuild with meson 0.41.2 
+
 * Sat Jul 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.3.1-2
 - rebuild
 - backport some patches from upstream
