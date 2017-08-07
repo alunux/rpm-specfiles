@@ -2,7 +2,7 @@
 
 Name:    budgie-vala-panel-appmenu-plugin
 Version: 0.5.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for Budgie Desktop
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -27,7 +27,6 @@ Requires: bamf-daemon
 Requires: libdbusmenu
 Requires: libdbusmenu-gtk2
 Requires: libdbusmenu-gtk3
-Requires: libappmenu-gtk-parser
 Requires: libappmenu-gtk2-parser
 Requires: libappmenu-gtk3-parser
 Requires: appmenu-gtk-module-common
@@ -124,6 +123,18 @@ and share all Unity limitations and advancements.
 %prep
 %autosetup -n vala-panel-appmenu-%{version} -p1
 
+cat > appmenu-gtk-module.sh << EOF
+if [ -z "\$%{nil}GTK_MODULES" ]; then
+    export GTK_MODULES="appmenu-gtk-module"
+else
+    export GTK_MODULES="\$%{nil}GTK_MODULES:appmenu-gtk-module"
+fi
+if [ -z "\$%{nil}UBUNTU_MENUPROXY" ]; then
+    export UBUNTU_MENUPROXY=1
+fi
+EOF
+
+
 %build
 %cmake -DGSETTINGS_COMPILE=OFF -DENABLE_XFCE=OFF -DENABLE_VALAPANEL=OFF \
        -DENABLE_BUDGIE=ON -DENABLE_MATE=OFF -DENABLE_UNITY_GTK_MODULE=ON
@@ -131,6 +142,7 @@ and share all Unity limitations and advancements.
 
 %install
 %make_install DESTDIR=%{buildroot}
+install -Dm 0644 appmenu-gtk-module.sh %{buildroot}%{_sysconfdir}/profile.d/appmenu-gtk-module.sh
 rm -rf %{buildroot}/%{_datadir}/locale/
 
 
@@ -201,6 +213,7 @@ rm -rf %{buildroot}
 
 %files -n appmenu-gtk-module-common
 %license LICENSE
+%config %{_sysconfdir}/profile.d/appmenu-gtk-module.*
 %{_datadir}/glib-2.0/schemas/*
 %{_userunitdir}/appmenu-gtk-module.service
 
@@ -211,6 +224,9 @@ rm -rf %{buildroot}
 %{_libdir}/gtk-3.0/modules/libappmenu-gtk-module.so
 
 %changelog
+* Mon Aug 07 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.2-3
+- add appmenu-gtk-module profile
+
 * Mon Aug 07 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.2-2
 - update spec file
 - use appmenu-gtk-module instead unity-gtk-module
