@@ -1,0 +1,24 @@
+From 333d85e530d4ae0111fe81db9d4f79ba1d840e3d Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Tue, 8 Aug 2017 17:53:03 +0700
+Subject: [PATCH 2/2] meson: remove unused variable
+
+---
+ meson.build | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index ebb354c..890d7b8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -67,7 +67,6 @@ podir = join_paths(meson.source_root(), 'po')
+ manokwari_system_path = join_paths(libdir, 'manokwari', 'system')
+ manokwari_session_path = join_paths(datadir, 'gnome-session', 'sessions')
+ manokwari_xsession_path = join_paths(datadir, 'xsessions')
+-manokwari_bin_path = join_paths(datadir, 'xsessions')
+ 
+ 
+ # Handle i18n on the .desktop file
+-- 
+2.9.4
+

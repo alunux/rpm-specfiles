@@ -1,0 +1,381 @@
+From feab41dd942552380ae02e70ca58959cbe0b8757 Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Tue, 8 Aug 2017 14:52:32 +0700
+Subject: [PATCH 1/2] Add Meson as optional build system
+
+---
+ .gitignore                                   |   1 +
+ configure.ac                                 |   2 +-
+ data/meson.build                             |   7 ++
+ files/bin/meson.build                        |   4 ++
+ files/menus/meson.build                      |   4 ++
+ files/meson.build                            |   4 ++
+ files/sessions/meson.build                   |   4 ++
+ files/xsessions/meson.build                  |   4 ++
+ meson.build                                  | 100 +++++++++++++++++++++++++++
+ po/meson.build                               |  34 +++++++++
+ src/meson.build                              |  73 +++++++++++++++++++
+ system/meson.build                           |  26 +++++++
+ vapi/{webkit-1.0.vapi => webkitgtk-3.0.vapi} |   0
+ 13 files changed, 262 insertions(+), 1 deletion(-)
+ create mode 100644 data/meson.build
+ create mode 100644 files/bin/meson.build
+ create mode 100644 files/menus/meson.build
+ create mode 100644 files/meson.build
+ create mode 100644 files/sessions/meson.build
+ create mode 100644 files/xsessions/meson.build
+ create mode 100644 meson.build
+ create mode 100644 po/meson.build
+ create mode 100644 src/meson.build
+ create mode 100644 system/meson.build
+ rename vapi/{webkit-1.0.vapi => webkitgtk-3.0.vapi} (100%)
+
+diff --git a/.gitignore b/.gitignore
+index dbd7b5a..5608aca 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -39,3 +39,4 @@ po/stamp-it
+ src/manokwari
+ src/manokwari_vala.stamp
+ stamp-h1
++/build/
+diff --git a/configure.ac b/configure.ac
+index 7d32d89..1cca3ff 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -78,7 +78,7 @@ AC_SUBST(WNCK_GMENU_DISCLAIMER)
+ AC_SUBST(MANOKWARI_CFLAGS)
+ AC_SUBST(MANOKWARI_LIBS)
+ 
+-VALA_PACKAGES="--pkg atk --pkg x11 --pkg gdk-x11-3.0 --pkg gee-1.0 --pkg cairo --pkg gtk+-3.0 --pkg gio-unix-2.0 --pkg libgnome-menu-3.0 --pkg gdk-3.0 --pkg libwnck-3.0 --pkg unique-3.0 --pkg webkit-1.0 --pkg javascriptcore --pkg libsoup-2.4 --pkg libnotify"
++VALA_PACKAGES="--pkg atk --pkg x11 --pkg gdk-x11-3.0 --pkg gee-1.0 --pkg cairo --pkg gtk+-3.0 --pkg gio-unix-2.0 --pkg libgnome-menu-3.0 --pkg gdk-3.0 --pkg libwnck-3.0 --pkg unique-3.0 --pkg webkitgtk-3.0 --pkg javascriptcore --pkg libsoup-2.4 --pkg libnotify"
+ 
+ AC_SUBST(VALA_PACKAGES)
+ 
+diff --git a/data/meson.build b/data/meson.build
+new file mode 100644
+index 0000000..dabaa91
+--- /dev/null
++++ b/data/meson.build
+@@ -0,0 +1,7 @@
++custom_target('desktop-file-applications',
++    input : 'manokwari.desktop.in',
++    output : 'manokwari.desktop',
++    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
++    install : true,
++    install_dir : join_paths(datadir, 'applications'),
++)
+diff --git a/files/bin/meson.build b/files/bin/meson.build
+new file mode 100644
+index 0000000..33182d1
+--- /dev/null
++++ b/files/bin/meson.build
+@@ -0,0 +1,4 @@
++install_data(
++    'blankon-session',
++    install_dir: join_paths(get_option('bindir')),
++)
+diff --git a/files/menus/meson.build b/files/menus/meson.build
+new file mode 100644
+index 0000000..7222ece
+--- /dev/null
++++ b/files/menus/meson.build
+@@ -0,0 +1,4 @@
++install_data(
++    'manokwari-applications.menu',
++    install_dir: join_paths('/etc', 'xdg', 'menus'),
++)
+diff --git a/files/meson.build b/files/meson.build
+new file mode 100644
+index 0000000..55b4d07
+--- /dev/null
++++ b/files/meson.build
+@@ -0,0 +1,4 @@
++subdir('bin')
++subdir('menus')
++subdir('sessions')
++subdir('xsessions')
+diff --git a/files/sessions/meson.build b/files/sessions/meson.build
+new file mode 100644
+index 0000000..a348c3b
+--- /dev/null
++++ b/files/sessions/meson.build
+@@ -0,0 +1,4 @@
++install_data(
++    'blankon.session',
++    install_dir: join_paths(get_option('datadir'), 'gnome-session', 'sessions'),
++)
+diff --git a/files/xsessions/meson.build b/files/xsessions/meson.build
+new file mode 100644
+index 0000000..50420e5
+--- /dev/null
++++ b/files/xsessions/meson.build
+@@ -0,0 +1,4 @@
++install_data(
++    'blankon.desktop',
++    install_dir: join_paths(get_option('datadir'), 'xsessions'),
++)
+diff --git a/meson.build b/meson.build
+new file mode 100644
+index 0000000..ebb354c
+--- /dev/null
++++ b/meson.build
+@@ -0,0 +1,100 @@
++# Inspired by https://github.com/budgie-desktop/budgie-desktop/blob/master/meson.build
++
++project(
++    'manokwari',
++    ['c', 'vala'],
++    version: '1.0.0',
++    license: [
++        'GPL-2.0',
++    ],
++    default_options: [
++        'c_std=c11',
++    ],
++)
++
++am_cflags = [
++    '-fstack-protector',
++    '-pedantic',
++    '-Wstrict-prototypes',
++    '-Wundef',
++    '-Werror-implicit-function-declaration',
++    '-Wformat',
++    '-Wformat-security',
++    '-Werror=format-security',
++    '-Wconversion',
++    '-Wunused-variable',
++    '-Wunreachable-code',
++    '-Wall',
++    '-W',
++]
++
++add_global_arguments(am_cflags, language: 'c')
++
++gnome_minimum_version = '>= 3.0.8'
++
++dep_glib = dependency('glib-2.0', version: '>= 2.12.0')
++dep_gtk3 = dependency('gtk+-3.0', version: gnome_minimum_version)
++dep_atk = dependency('atk', version: '>= 2.0.0')
++dep_gee = dependency('gee-1.0', version: '>= 0.6.1')
++dep_cairo = dependency('cairo', version: '>= 1.10.2')
++dep_libgnomemenu = dependency('libgnome-menu-3.0', version: '>= 2.30.5')
++dep_libwnck = dependency('libwnck-3.0', version: '>= 3.0.0')
++dep_unique = dependency('unique-3.0', version: '>= 3.0.0')
++dep_webkit = dependency('webkitgtk-3.0', version: '>= 1.3.0')
++dep_x11 = dependency('x11', version: '>= 1.6.0')
++dep_libnotify = dependency('libnotify', version: '>= 0.7.6')
++
++# Create config.h
++cdata = configuration_data()
++
++# Inspired by https://github.com/GNOME/recipes/blob/master/meson.build
++package_version = meson.project_version()
++cdata.set_quoted('PACKAGE_VERSION', package_version)
++
++# Make gettext work
++cdata.set_quoted('GETTEXT_PACKAGE', meson.project_name())
++add_global_arguments('-DGETTEXT_PACKAGE="manokwari"', language: 'c')
++
++# Globals that we need
++prefix = get_option('prefix')
++bindir = join_paths(prefix, get_option('bindir'))
++libdir = join_paths(prefix, get_option('libdir'))
++confdir = join_paths(prefix, get_option('sysconfdir'))
++datadir = join_paths(prefix, get_option('datadir'))
++localedir = join_paths(prefix, get_option('localedir'))
++podir = join_paths(meson.source_root(), 'po')
++
++manokwari_system_path = join_paths(libdir, 'manokwari', 'system')
++manokwari_session_path = join_paths(datadir, 'gnome-session', 'sessions')
++manokwari_xsession_path = join_paths(datadir, 'xsessions')
++manokwari_bin_path = join_paths(datadir, 'xsessions')
++
++
++# Handle i18n on the .desktop file
++# Originally stolem from TingPing:
++# https://github.com/vinszent/gnome-twitch/blob/master/data/meson.build
++# Later changed to use intltool as we use _Key style files
++intltool = find_program('intltool-merge')
++
++cdata.set_quoted('SYSTEM_PATH', manokwari_system_path)
++cdata.set_quoted('SESSIONS_PATH', manokwari_session_path)
++cdata.set_quoted('XSESSIONS_PATH', manokwari_xsession_path)
++cdata.set_quoted('BIN_PATH', bindir)
++cdata.set_quoted('LOCALEDIR', localedir)
++
++
++# Write config.h
++configure_file(
++    output: 'config.h',
++    configuration: cdata,
++)
++
++extra_includes = [
++    include_directories('.'),
++]
++
++subdir('po')
++subdir('src')
++subdir('system')
++subdir('data')
++subdir('files')
+diff --git a/po/meson.build b/po/meson.build
+new file mode 100644
+index 0000000..04a5a9b
+--- /dev/null
++++ b/po/meson.build
+@@ -0,0 +1,34 @@
++i18n = import('i18n')
++
++langs = [
++    'gay',
++    'id',
++    'jv',
++    'su',
++]
++
++# Stole this from gnome-twitch, ty TingPing
++# https://github.com/vinszent/gnome-twitch/tree/master/po
++i18n.gettext(meson.project_name(), languages : langs, args : [
++    '--from-code=UTF-8',
++    '--add-comments',
++    '--package-name=' + meson.project_name(),
++    '--package-version=' + meson.project_version(),
++    '--keyword=_',
++    '--keyword=N_',
++    '--keyword=C_:1c,2',
++    '--keyword=NC_:1c,2',
++    '--keyword=g_dcgettext:2',
++    '--keyword=g_dngettext:2,3',
++    '--keyword=g_dpgettext2:2c,3',
++
++    '--flag=N_:1:pass-c-format',
++    '--flag=C_:2:pass-c-format',
++    '--flag=NC_:2:pass-c-format',
++    '--flag=g_dngettext:2:pass-c-format',
++    '--flag=g_strdup_printf:1:c-format',
++    '--flag=g_string_printf:2:c-format',
++    '--flag=g_string_append_printf:2:c-format',
++    '--flag=g_error_new:3:c-format',
++    '--flag=g_set_error:4:c-format',
++])
+diff --git a/src/meson.build b/src/meson.build
+new file mode 100644
+index 0000000..9badffe
+--- /dev/null
++++ b/src/meson.build
+@@ -0,0 +1,73 @@
++manokwari_panel_sources = [
++    'main.vala',
++    'panel-abstract-window.vala',
++    'panel-window.vala',
++    'panel-menu-box.vala',
++    'panel-menu-content.vala',
++    'panel-tray.vala',
++    'panel-scrollable-content.vala',
++    'panel-animated-adjustment.vala',
++    'panel-clock.vala',
++    'panel-places.vala',
++    'panel-screen.vala',
++    'utils.vala',
++    'panel-hotkey.vala',
++    'panel-session-manager.vala',
++    'panel-menu-html.vala',
++    'xdg-data.vala',
++    'panel-user.vala',
++    'panel-desktop.vala',
++    'panel-desktop-html.vala',
++    'panel-desktop-data.vala',
++    'panel-calendar.vala',
++    'animated-property.vala',
++    'panel-shell.vala',
++    'panel-socket.vala',
++    'panel-xdg-properties.vala',
++]
++
++manokwari_panel_deps = [
++    dep_gtk3,
++    dep_glib,
++    dep_atk,
++    dep_x11,
++    dep_gee,
++    dep_cairo,
++    dep_libgnomemenu,
++    dep_unique,
++    dep_webkit,
++    dep_libnotify,
++    dep_libwnck,
++]
++
++manokwari_vapi = join_paths(meson.source_root(), 'vapi')
++
++executable(
++    'manokwari', manokwari_panel_sources,
++    dependencies: manokwari_panel_deps,
++    include_directories: extra_includes,
++    vala_args: [
++        '--pkg', 'config',
++        '--vapidir', manokwari_vapi,
++        '--pkg', 'atk',
++        '--pkg', 'x11',
++        '--pkg', 'gdk-x11-3.0',
++        '--pkg', 'gee-1.0',
++        '--pkg', 'cairo',
++        '--pkg', 'gtk+-3.0',
++        '--pkg', 'gio-unix-2.0',
++        '--pkg', 'libgnome-menu-3.0',
++        '--pkg', 'gdk-3.0',
++        '--pkg', 'libwnck-3.0',
++        '--pkg', 'unique-3.0',
++        '--pkg', 'webkitgtk-3.0',
++        '--pkg', 'javascriptcore',
++        '--pkg', 'libsoup-2.4',
++        '--pkg', 'libnotify',
++    ],
++    c_args: [
++        '-DGMENU_I_KNOW_THIS_IS_UNSTABLE',
++        '-DWNCK_I_KNOW_THIS_IS_UNSTABLE',
++    ],
++    install: true,
++)
+diff --git a/system/meson.build b/system/meson.build
+new file mode 100644
+index 0000000..a18d68b
+--- /dev/null
++++ b/system/meson.build
+@@ -0,0 +1,26 @@
++manokwari_system_subdir = [
++    'css',
++    'fonts',
++    'img',
++    'js',
++    'widget',
++]
++
++manokwari_system_files = [
++    'desktop.html',
++    'menu.html',
++    'texture.jpg',
++    'texture.xcf',
++]
++
++foreach sub_dir : manokwari_system_subdir
++    install_subdir(
++        sub_dir,
++        install_dir: join_paths(libdir, meson.project_name(), 'system'),
++    )
++endforeach
++
++install_data(
++    manokwari_system_files,
++    install_dir: join_paths(libdir, meson.project_name(), 'system'),
++)
+diff --git a/vapi/webkit-1.0.vapi b/vapi/webkitgtk-3.0.vapi
+similarity index 100%
+rename from vapi/webkit-1.0.vapi
+rename to vapi/webkitgtk-3.0.vapi
+-- 
+2.9.4
+
