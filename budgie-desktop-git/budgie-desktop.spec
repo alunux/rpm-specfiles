@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 7561deb17452b650b370e11fbe3a4f2ddfe9e74b
+%global commit0 ebbb960798613fe3392ae030cf6d5053db60eec7
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -194,6 +194,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Tue Aug 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170808.ebbb960-1
+- build from commit ebbb960798613fe3392ae030cf6d5053db60eec7
+
 * Sat Jul 29 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170729.7561deb-1
 - build from commit 7561deb17452b650b370e11fbe3a4f2ddfe9e74b
 
