@@ -1,14 +1,13 @@
 %global _hardened_build 1
 
 Name:    budgie-vala-panel-appmenu-plugin
-Version: 0.5.2
-Release: 3%{?dist}
+Version: 0.5.3
+Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for Budgie Desktop
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
 
 Source0: https://github.com/rilian-la-te/vala-panel-appmenu/releases/download/%{version}/vala-panel-appmenu-%{version}.tar.gz
-Patch0:  backporting-from-master.patch
 
 BuildRequires: cmake >= 2.8.0
 BuildRequires: gettext
@@ -224,6 +223,9 @@ rm -rf %{buildroot}
 %{_libdir}/gtk-3.0/modules/libappmenu-gtk-module.so
 
 %changelog
+* Fri Aug 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-1
+- update to 0.5.3
+
 * Mon Aug 07 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.2-3
 - add appmenu-gtk-module profile
 

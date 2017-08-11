@@ -1,14 +1,13 @@
 %global _hardened_build 1
 
 Name:    vala-panel-appmenu
-Version: 0.5.2
-Release: 3%{?dist}
+Version: 0.5.3
+Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
 
 Source0: https://github.com/rilian-la-te/vala-panel-appmenu/releases/download/%{version}/%{name}-%{version}.tar.gz
-Patch0:  backporting-from-master.patch
 
 BuildRequires: cmake >= 2.8.0
 BuildRequires: gettext
@@ -126,6 +125,9 @@ rm -rf %{buildroot}
 %{_datadir}/xfce4/panel/plugins/appmenu.desktop
 
 %changelog
+* Fri Aug 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-1
+- update to 0.5.3
+
 * Sat Jul 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.2-3
 - Fix wrong dependencies name
 
