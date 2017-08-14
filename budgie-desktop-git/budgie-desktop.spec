@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 952cf891ddaa1572843d0e42df98ec340dccf918
+%global commit0 ad4a40245e10f9e9c8e2ca85e7ebb9a24707f77b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -29,10 +29,14 @@ BuildRequires: pkgconfig(libpeas-gtk-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpulse) >= 2
 BuildRequires: pkgconfig(libpulse-mainloop-glib) >= 2
 BuildRequires: pkgconfig(libwnck-3.0) >= 3.14.0
-%if 0%{?fedora} >= 26
-BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
-%else
+%if 0%{?fedora} <= 25
 BuildRequires: pkgconfig(libmutter) >= 3.18.0
+%endif
+%if 0%{?fedora} == 26
+BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
+%endif
+%if 0%{?fedora} >= 27
+BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -194,6 +198,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Mon Aug 14 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170814.ad4a402-1
+- build from commit ad4a40245e10f9e9c8e2ca85e7ebb9a24707f77b
+
 * Wed Aug 09 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170809.952cf89-1
 - build from commit 952cf891ddaa1572843d0e42df98ec340dccf918
 
