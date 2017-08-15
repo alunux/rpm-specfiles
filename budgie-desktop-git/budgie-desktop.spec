@@ -1,18 +1,19 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 ad4a40245e10f9e9c8e2ca85e7ebb9a24707f77b
+%global commit0 4fa0a6cc5234648c0173f4421980d10215432b01
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0 and LGPL-2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/%{name}/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Patch0: 0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -198,6 +199,13 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.4fa0a6c-2
+- revert some CSS stuff that affect global menu padding
+
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.4fa0a6c-1
+- build from commit 4fa0a6cc5234648c0173f4421980d10215432b01
+- this is Budgie 10.4 "Irish Summer" release
+
 * Mon Aug 14 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170814.ad4a402-1
 - build from commit ad4a40245e10f9e9c8e2ca85e7ebb9a24707f77b
 

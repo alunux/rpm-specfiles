@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 d5f7214f1dcb134471a96bb3f2d050cd7df2ff53
+%global commit0 41a619051e79e7cfa42d63d47909acebc0fc744d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -19,7 +19,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(gtk+-3.0) > 3.18
 BuildRequires: pkgconfig(libsoup-2.4) >= 0.6
 BuildRequires: vala >= 0.28
-BuildRequires: meson <= 0.40.1
+BuildRequires: meson
 BuildRequires: intltool
 
 %description
@@ -67,6 +67,9 @@ fi
 %{_datadir}/glib-2.0/schemas/com.github.cybre.%{name}.gschema.xml
 
 %changelog
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.41a6190-1
+- build from 41a619051e79e7cfa42d63d47909acebc0fc744d
+
 * Sat Jul 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170715.d5f7214-1
 - Initial package
 - build from git master branch - d5f7214f1dcb134471a96bb3f2d050cd7df2ff53

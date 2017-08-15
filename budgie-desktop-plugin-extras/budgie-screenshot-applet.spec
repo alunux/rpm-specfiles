@@ -7,10 +7,10 @@
 
 Name:       budgie-screenshot-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Screenshot Applet
-URL:        https://github.com/cybre/budgie-haste-applet
+URL:        https://github.com/cybre/budgie-screenshot-applet
 
 Source0: https://github.com/cybre/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
@@ -20,7 +20,7 @@ BuildRequires: pkgconfig(gtk+-3.0) >= 3.18
 BuildRequires: pkgconfig(libsoup-2.4) >= 0.6
 BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: vala >= 0.28
-BuildRequires: meson <= 0.40.1
+BuildRequires: meson
 BuildRequires: intltool
 BuildRequires: pkgconfig(libcurl)
 
@@ -73,6 +73,10 @@ fi
 
 
 %changelog
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.180aa7f-2
+- rebuild
+- fix wrong url in description
+
 * Sat Jul 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170715.180aa7f-1
 - Initial package
 - build from git master branch - 180aa7f03afb9ce9e6e936ffcdfd6b04ce804269

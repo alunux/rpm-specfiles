@@ -2,15 +2,14 @@
 %global _vpath_builddir build
 
 Name:       budgie-desktop
-Version:    10.3.1
-Release:    3%{?dist}
+Version:    10.4
+Release:    2%{?dist}
 License:    GPL-2.0 and LGPL-2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
-Patch0: 0001-wm-Default-to-an-empty-rpath.patch
-Patch1: 0005-Fix-typo-in-meson.build.patch
+Patch0: 0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -27,10 +26,14 @@ BuildRequires: pkgconfig(libpeas-gtk-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpulse) >= 2
 BuildRequires: pkgconfig(libpulse-mainloop-glib) >= 2
 BuildRequires: pkgconfig(libwnck-3.0) >= 3.14.0
-%if 0%{?fedora} >= 26
-BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
-%else
+%if 0%{?fedora} <= 25
 BuildRequires: pkgconfig(libmutter) >= 3.18.0
+%endif
+%if 0%{?fedora} == 26
+BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
+%endif
+%if 0%{?fedora} >= 27
+BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -46,6 +49,7 @@ BuildRequires: git
 BuildRequires: meson
 BuildRequires: intltool
 BuildRequires: gtk-doc
+BuildRequires: sassc
 
 Requires: hicolor-icon-theme
 Requires: gnome-session
@@ -143,15 +147,20 @@ fi
 %files -f %{name}.lang
 %doc README.md
 %license LICENSE LICENSE.LGPL2.1
-%{_bindir}/budgie-{daemon,desktop,panel,polkit-dialog,wm}
+%{_bindir}/budgie-*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/budgie-desktop-*.desktop
 %{_libdir}/budgie-desktop/
 %{_libdir}/girepository-1.0/Budgie*.typelib
 %{_datadir}/applications/budgie-*.desktop
 %{_datadir}/gnome-session/sessions/budgie-desktop.session
+%{_datadir}/icons/hicolor/scalable/apps/budgie-desktop-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/notification-alert-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/pane-hide-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/actions/pane-show-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-hibernate-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-log-out-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-restart-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/system-suspend-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/clock-applet-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/icon-task-list-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/notifications-applet-symbolic.svg
@@ -185,6 +194,12 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-2
+- revert some CSS stuff that affect global menu padding
+
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-1
+- update to Budgie 10.4 "Irish Summer"
+
 * Sat Jul 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.3.1-3
 - try to rebuild with meson 0.41.2 
 
