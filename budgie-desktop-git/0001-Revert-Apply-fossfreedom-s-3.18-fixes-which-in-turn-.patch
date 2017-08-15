@@ -1,0 +1,39 @@
+From f28c5f793fd67f27180b6f04c4da8c4b9036fa20 Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Tue, 15 Aug 2017 12:17:37 +0700
+Subject: [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
+ #1047"
+
+This reverts commit 4d7cfeaefd7d33fb05d54384ff968a4573fcca6d.
+---
+ src/theme/3.18/theme.scss     | 2 ++
+ src/theme/common/_resets.scss | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/theme/3.18/theme.scss b/src/theme/3.18/theme.scss
+index 890da15..10413d3 100644
+--- a/src/theme/3.18/theme.scss
++++ b/src/theme/3.18/theme.scss
+@@ -8,6 +8,8 @@ $variant: 'default';
+     text-shadow: none;
+     icon-shadow: none;
+     opacity: 1;
++    min-width: 0;
++    min-height: 0;
+ }
+ 
+ @import 'settings';
+diff --git a/src/theme/common/_resets.scss b/src/theme/common/_resets.scss
+index 8bfefe5..59e9967 100644
+--- a/src/theme/common/_resets.scss
++++ b/src/theme/common/_resets.scss
+@@ -1,5 +1,5 @@
+ @mixin menu_reset_style($label,$insensitive) {
+-    padding: 2px 2px;
++    padding: 4px 8px;
+     border: solid transparent;
+     border-width: 0;
+ 
+-- 
+2.13.5
+
