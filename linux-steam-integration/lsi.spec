@@ -3,7 +3,7 @@
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
 Version: 0.3
-Release: 3%{?dist}
+Release: 6%{?dist}
 License: LGPL-2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
@@ -24,7 +24,6 @@ Requires: atk(x86-32)
 Requires: avahi-libs(x86-32)
 Requires: bzip2-libs(x86-32)
 Requires: cairo(x86-32)
-Requires: compat-libgcrypt(x86-32)
 Requires: cups-libs(x86-32)
 Requires: dbus-glib(x86-32)
 Requires: dbus-libs(x86-32)
@@ -196,6 +195,15 @@ of an effort by Solus to enhance Steam for everyone.
 %{_datadir}/applications/lsi-steam.desktop
 
 %changelog
+* Wed Aug 16 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-5
+- re-disable compat-libgcrypt from dependency again!
+
+* Mon Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-5
+- re-enable compat-libgcrypt from dependency
+
+* Sat Aug 12 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-4
+- remove compat-libgcrypt from dependency
+
 * Sat Apr 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-3
 - re-enable debug package
 
