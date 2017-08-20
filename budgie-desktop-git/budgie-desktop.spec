@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 4fa0a6cc5234648c0173f4421980d10215432b01
+%global commit0 e950d5350e910004502feb099393bf24af6f74aa
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -199,6 +199,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sun Aug 20 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170820.e950d53-1
+- build from commit e950d5350e910004502feb099393bf24af6f74aa
+
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.4fa0a6c-2
 - revert some CSS stuff that affect global menu padding
 
