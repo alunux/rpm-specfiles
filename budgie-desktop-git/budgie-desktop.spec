@@ -1,13 +1,13 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 e950d5350e910004502feb099393bf24af6f74aa
+%global commit0 c2d75cdcd7e2c426d5813daec8a91cbd05d5811d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    1%{?dist}
 License:    GPL-2.0 and LGPL-2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -199,6 +199,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Thu Aug 31 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170831.c2d75cd-1
+- build from commit c2d75cdcd7e2c426d5813daec8a91cbd05d5811d
+
 * Sun Aug 20 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170820.e950d53-1
 - build from commit e950d5350e910004502feb099393bf24af6f74aa
 
