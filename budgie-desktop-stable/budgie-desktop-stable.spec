@@ -3,13 +3,14 @@
 
 Name:       budgie-desktop
 Version:    10.4
-Release:    2%{?dist}
+Release:    3%{?dist}
 License:    GPL-2.0 and LGPL-2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
 Patch0: 0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+Patch1: c2d75cdcd7e2c426d5813daec8a91cbd05d5811d.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -194,6 +195,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Thu Aug 31 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-3
+- patch issue https://github.com/budgie-desktop/budgie-desktop/issues/1129
+
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-2
 - revert some CSS stuff that affect global menu padding
 
