@@ -3,8 +3,8 @@
 
 Name:       budgie-desktop
 Version:    10.4
-Release:    3%{?dist}
-License:    GPL-2.0 and LGPL-2.1
+Release:    4%{?dist}
+License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
@@ -62,6 +62,10 @@ Requires: network-manager-applet
 Requires: %{name}-libs
 Requires: %{name}-schemas
 Requires: %{name}-rundialog
+
+Recommends: arc-theme
+Recommends: arc-icon-theme
+Recommends: moka-icon-theme
 
 %description
 Budgie is the flagship desktop of the Solus, and is an Solus project.
@@ -195,8 +199,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
-* Thu Aug 31 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-3
-- patch issue https://github.com/budgie-desktop/budgie-desktop/issues/1129
+* Sun Oct 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-4
+- recommends arc-theme, arc-icon-theme, and moka-icon-theme
+- fix license short name based on https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing#Software_License_List
 
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-2
 - revert some CSS stuff that affect global menu padding
