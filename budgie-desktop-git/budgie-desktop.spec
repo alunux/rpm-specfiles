@@ -1,14 +1,14 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 c2d75cdcd7e2c426d5813daec8a91cbd05d5811d
+%global commit0 ff09a5104075e9774d8f600b875e9871eccb04f8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
 Release:    1%{?dist}
-License:    GPL-2.0 and LGPL-2.1
+License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
@@ -66,6 +66,10 @@ Requires: %{name}-libs
 Requires: %{name}-schemas
 Requires: %{name}-rundialog
 
+Recommends: arc-theme
+Recommends: arc-icon-theme
+Recommends: moka-icon-theme
+
 %description
 Budgie is the flagship desktop of the Solus, and is an Solus project.
 The Budgie Desktop a modern desktop designed to keep out the way of
@@ -117,7 +121,11 @@ Development files for the Budgie Desktop
 
 %prep
 %autosetup -n %{name}-%{commit0} -p1
-git clone --depth 1 git://git.gnome.org/libgnome-volume-control src/gvc
+if [ ! -d .git ]; then
+    git clone --bare --depth 1 https://github.com/budgie-desktop/budgie-desktop.git .git
+    git config --local --bool core.bare false
+    git reset --hard
+fi
 
 %build
 export LC_ALL=en_US.utf8
@@ -199,6 +207,23 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Tue Oct 17 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171017.ff09a51-1
+- build from commit ff09a5104075e9774d8f600b875e9871eccb04f8
+- fix build that contains meson subprojects
+
+* Sun Oct 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171008.9e2cc0f-3
+- recommends arc-theme, arc-icon-theme, and moka-icon-theme
+- fix license short name based on https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing#Software_License_List
+
+* Mon Sep 18 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170918.9e2cc0f-2
+- rebuild
+
+* Fri Sep 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170915.9e2cc0f-1
+- build from commit 9e2cc0f2f6549b75ba6ba1d880ea68364ca6445c
+
+* Mon Sep 11 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170911.69fd617-1
+- build from commit 69fd617eed1da896d5a1bc5e82de901cd2a1a33d
+
 * Thu Aug 31 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170831.c2d75cd-1
 - build from commit c2d75cdcd7e2c426d5813daec8a91cbd05d5811d
 
