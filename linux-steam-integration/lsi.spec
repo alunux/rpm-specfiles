@@ -1,13 +1,15 @@
 %global _hardened_build 1
+%global _vpath_builddir build
 
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
-Version: 0.3
-Release: 6%{?dist}
-License: LGPL-2.1
+Version: 0.5
+Release: 2%{?dist}
+License: LGPLv2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
 BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: meson
 
 Requires: steam
 Requires: alsa-lib(x86-32)
@@ -171,34 +173,49 @@ Requires: libgudev(x86-32)
 Requires: trousers-lib(x86-32)
 
 Source0: https://github.com/solus-project/linux-steam-integration/releases/download/v%{version}/linux-steam-integration-%{version}.tar.xz
+Patch0:  backport-from-master.patch
+Patch1:  0001-config-don-t-use-libintercept-by-default.patch
 
 %description
 A helper shim to enable better Steam* integration on Linux systems. This is part
 of an effort by Solus to enhance Steam for everyone.
 
 %prep
-%autosetup
-%configure --enable-frontend --with-real-steam-binary=/usr/bin/steam --disable-replace-steam
+%autosetup -p1
 
 %build
-%make_build
+export LC_ALL=en_US.utf8
+%meson -Dwith-shim=co-exist -Dwith-new-libcxx-abi=true -Dwith-frontend=true -Dwith-steam-binary=/usr/bin/steam
+%meson_build
 
 %install
-%make_install
+export LC_ALL=en_US.utf8
+%meson_install
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
-%doc README.rst
-%license LICENSE.LGPL2.1
+%license LICENSE
+%attr(644, root, root) %doc README.md
 %{_bindir}/lsi-steam
 %{_bindir}/lsi-settings
 %{_datadir}/applications/lsi-settings.desktop
 %{_datadir}/applications/lsi-steam.desktop
+%{_libdir}/liblsi-intercept.so
 
 %changelog
+* Wed Oct 18 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.5-2
+- don't use libintercept by default because performance issues
+
+* Wed Oct 18 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.5-1
+- update to v0.5
+- backport some patches from master branch
+
 * Wed Aug 16 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-5
 - re-disable compat-libgcrypt from dependency again!
 
-* Mon Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-5
+* Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-5
 - re-enable compat-libgcrypt from dependency
 
 * Sat Aug 12 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.3-4
