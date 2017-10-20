@@ -7,7 +7,7 @@
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -120,12 +120,13 @@ Development files for the Budgie Desktop
 
 
 %prep
-%autosetup -n %{name}-%{commit0} -p1
+%setup -q -n %{name}-%{commit0}
 if [ ! -d .git ]; then
     git clone --bare --depth 1 https://github.com/budgie-desktop/budgie-desktop.git .git
     git config --local --bool core.bare false
     git reset --hard
 fi
+%patch0 -p1
 
 %build
 export LC_ALL=en_US.utf8
@@ -207,6 +208,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Thu Oct 19 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171019.ff09a51-2
+- fix global menu css patch
+
 * Tue Oct 17 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171017.ff09a51-1
 - build from commit ff09a5104075e9774d8f600b875e9871eccb04f8
 - fix build that contains meson subprojects
