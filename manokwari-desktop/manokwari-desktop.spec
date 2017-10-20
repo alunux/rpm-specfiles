@@ -2,15 +2,14 @@
 %global _vpath_builddir build
 
 Name:       manokwari
-Version:    1.0.13
+Version:    1.0.16
 Release:    1%{?dist}
 License:    GPL-2.0
 Summary:    Desktop shell for GNOME 3 with Gtk+ and HTML5 frontend
 URL:        http://manokwari.blankonlinux.or.id
 
 Source0: https://github.com/BlankOn/manokwari/archive/%{version}.tar.gz
-Patch0: 0001-Add-Meson-as-optional-build-system.patch
-Patch1: 0002-meson-remove-unused-variable.patch
+Patch0:  manokwari-autostart.patch
 
 BuildRequires: pkgconfig(glib-2.0) >= 2.12.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.0.8
@@ -76,6 +75,7 @@ fi
 %{_bindir}/%{name}
 %{_bindir}/blankon-session
 %config(noreplace) %{_sysconfdir}/xdg/menus/%{name}-applications.menu
+%config(noreplace) %{_sysconfdir}/xdg/autostart/manokwari-*.desktop
 %{_libdir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/gnome-session/sessions/blankon.session
