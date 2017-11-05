@@ -2,7 +2,7 @@
 
 Name:    vala-panel-appmenu
 Version: 0.5.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -125,7 +125,10 @@ rm -rf %{buildroot}
 %{_datadir}/xfce4/panel/plugins/appmenu.desktop
 
 %changelog
-* Fri Aug 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-1
+* Sat Nov 04 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-2
+- rebuild
+
+* Fri Aug 11 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-1
 - update to 0.5.3
 
 * Sat Jul 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.2-3
