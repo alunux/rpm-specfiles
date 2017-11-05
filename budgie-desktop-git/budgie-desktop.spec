@@ -1,13 +1,13 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 ff09a5104075e9774d8f600b875e9871eccb04f8
+%global commit0 9f71bb847ef73a14e2cd248b34aaa3866b7e795c
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    1%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -208,6 +208,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sat Nov 04 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171019.9f71bb8-1
+- build from commit 9f71bb847ef73a14e2cd248b34aaa3866b7e795c
+
 * Thu Oct 19 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171019.ff09a51-2
 - fix global menu css patch
 
