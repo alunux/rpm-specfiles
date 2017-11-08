@@ -3,13 +3,14 @@
 
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
-Version: 0.5
-Release: 2%{?dist}
+Version: 0.6
+Release: 1%{?dist}
 License: LGPLv2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: meson
+BuildRequires: gettext
 
 Requires: steam
 Requires: alsa-lib(x86-32)
@@ -173,8 +174,7 @@ Requires: libgudev(x86-32)
 Requires: trousers-lib(x86-32)
 
 Source0: https://github.com/solus-project/linux-steam-integration/releases/download/v%{version}/linux-steam-integration-%{version}.tar.xz
-Patch0:  backport-from-master.patch
-Patch1:  0001-config-don-t-use-libintercept-by-default.patch
+Patch0:  0001-config-don-t-use-libintercept-by-default.patch
 
 %description
 A helper shim to enable better Steam* integration on Linux systems. This is part
@@ -191,11 +191,12 @@ export LC_ALL=en_US.utf8
 %install
 export LC_ALL=en_US.utf8
 %meson_install
+%find_lang %{name}
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %license LICENSE
 %attr(644, root, root) %doc README.md
 %{_bindir}/lsi-steam
@@ -203,8 +204,12 @@ export LC_ALL=en_US.utf8
 %{_datadir}/applications/lsi-settings.desktop
 %{_datadir}/applications/lsi-steam.desktop
 %{_libdir}/liblsi-intercept.so
+%{_libdir}/liblsi-redirect.so
 
 %changelog
+* Wed Nov 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.6-1
+- update to v0.6
+
 * Wed Oct 18 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.5-2
 - don't use libintercept by default because performance issues
 
