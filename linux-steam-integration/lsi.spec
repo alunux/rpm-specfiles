@@ -4,7 +4,7 @@
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
 Version: 0.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: LGPLv2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
@@ -172,41 +172,68 @@ Requires: xz-libs(x86-32)
 Requires: zlib(x86-32)
 Requires: libgudev(x86-32)
 Requires: trousers-lib(x86-32)
+Requires: %{name}-libs(x86-64)
+Requires: %{name}-libs(x86-32)
 
 Source0: https://github.com/solus-project/linux-steam-integration/releases/download/v%{version}/linux-steam-integration-%{version}.tar.xz
-Patch0:  0001-config-don-t-use-libintercept-by-default.patch
 
 %description
 A helper shim to enable better Steam* integration on Linux systems. This is part
 of an effort by Solus to enhance Steam for everyone.
 
+
+%package    libs
+Obsoletes:  %{name} < 0.6-2%{?dist}
+Requires:   %{name} = %{version}-%{release}
+Summary:    Common libraries for Linux Steam Integration 
+
+%description    libs
+Common libraries for Linux Steam Integration
+
+
 %prep
-%autosetup -p1
+%autosetup
 
 %build
 export LC_ALL=en_US.utf8
-%meson -Dwith-shim=co-exist -Dwith-new-libcxx-abi=true -Dwith-frontend=true -Dwith-steam-binary=/usr/bin/steam
+%if %{__isa_bits} == 64
+    %meson -Dwith-shim=co-exist -Dwith-new-libcxx-abi=true -Dwith-frontend=true -Dwith-steam-binary=/usr/bin/steam
+%endif
+%if %{__isa_bits} == 32
+    %meson -Dwith-shim=none -Dwith-new-libcxx-abi=true
+%endif
 %meson_build
 
 %install
 export LC_ALL=en_US.utf8
 %meson_install
 %find_lang %{name}
+%if %{__isa_bits} == 32
+    find %{buildroot} -name '*.mo' -delete
+%endif
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+%if %{__isa_bits} == 64
 %files -f %{name}.lang
 %license LICENSE
-%attr(644, root, root) %doc README.md
+%attr(644, root, root) %doc README.md TECHNICAL.md
 %{_bindir}/lsi-steam
 %{_bindir}/lsi-settings
 %{_datadir}/applications/lsi-settings.desktop
 %{_datadir}/applications/lsi-steam.desktop
+%endif
+
+%files libs
 %{_libdir}/liblsi-intercept.so
 %{_libdir}/liblsi-redirect.so
 
 %changelog
+* Thu Nov 09 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.6-2
+- drop libintercept config pacth, restore to default
+- split libintercept and libredirect from main package
+
 * Wed Nov 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.6-1
 - update to v0.6
 
