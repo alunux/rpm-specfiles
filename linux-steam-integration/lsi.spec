@@ -4,7 +4,7 @@
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
 Version: 0.6
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPLv2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
@@ -49,7 +49,6 @@ Requires: graphite2(x86-32)
 Requires: gsm(x86-32)
 Requires: gstreamer(x86-32)
 Requires: gstreamer1(x86-32)
-Requires: gstreamer-devel(x86-32)
 Requires: gstreamer-plugins-base(x86-32)
 Requires: gtk2(x86-32)
 Requires: gtk2-engines(x86-32)
@@ -192,7 +191,7 @@ Common libraries for Linux Steam Integration
 
 
 %prep
-%autosetup
+%autosetup -p1
 
 %build
 export LC_ALL=en_US.utf8
@@ -220,6 +219,7 @@ export LC_ALL=en_US.utf8
 %license LICENSE
 %attr(644, root, root) %doc README.md TECHNICAL.md
 %{_bindir}/lsi-steam
+%{_bindir}/lsi-exec
 %{_bindir}/lsi-settings
 %{_datadir}/applications/lsi-settings.desktop
 %{_datadir}/applications/lsi-steam.desktop
@@ -230,6 +230,10 @@ export LC_ALL=en_US.utf8
 %{_libdir}/liblsi-redirect.so
 
 %changelog
+* Tue Nov 14 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.6-3
+- fix libbz2 and libudev issues
+- currently, build from master branch
+
 * Thu Nov 09 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.6-2
 - drop libintercept config pacth, restore to default
 - split libintercept and libredirect from main package
