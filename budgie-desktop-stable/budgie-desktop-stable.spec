@@ -9,9 +9,6 @@ Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
-Patch0: 0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
-Patch1: c2d75cdcd7e2c426d5813daec8a91cbd05d5811d.patch
-Patch2: 0001-Update-gvc-submodule-and-fix-issues-when-built-using.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
