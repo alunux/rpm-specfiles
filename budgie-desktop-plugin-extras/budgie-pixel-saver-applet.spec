@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 632d3fe3725ffa0ca25498c25baa15200ea01bb9
+%global commit0 30c1f94683b17b6e47b9676f97e99a19db6ecb20
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -69,6 +69,9 @@ fi
 %{_datadir}/glib-2.0/schemas/net.milgar.budgie-pixel-saver.gschema.xml
 
 %changelog
+* Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171122.30c1f94-1
+- build from 30c1f94683b17b6e47b9676f97e99a19db6ecb20
+
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.632d3fe-1
 - build from 632d3fe3725ffa0ca25498c25baa15200ea01bb9
 

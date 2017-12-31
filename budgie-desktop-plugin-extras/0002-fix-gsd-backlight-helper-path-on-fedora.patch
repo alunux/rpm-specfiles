@@ -1,0 +1,43 @@
+From def115aa94cdffa7506a595016e19f31853f27dc Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Wed, 12 Jul 2017 19:52:26 +0700
+Subject: [PATCH 2/2] fix gsd-backlight-helper path on fedora
+
+---
+ src/BudgieBrightnessControlApplet.vala | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/BudgieBrightnessControlApplet.vala b/src/BudgieBrightnessControlApplet.vala
+index 22607e1..47034b9 100644
+--- a/src/BudgieBrightnessControlApplet.vala
++++ b/src/BudgieBrightnessControlApplet.vala
+@@ -205,7 +205,7 @@ public class Applet : Budgie.Applet
+      */
+     private int get_max_brightness() {
+         try {
+-            string[] spawn_args = {"pkexec", "/usr/lib/gnome-settings-daemon/gsd-backlight-helper",
++            string[] spawn_args = {"pkexec", "/usr/libexec/gsd-backlight-helper",
+                 "--get-max-brightness"};
+             string[] spawn_env = Environ.get ();
+             string ls_stdout;
+@@ -233,7 +233,7 @@ public class Applet : Budgie.Applet
+      */
+     private int get_brightness() {
+         try {
+-            string[] spawn_args = {"pkexec", "/usr/lib/gnome-settings-daemon/gsd-backlight-helper",
++            string[] spawn_args = {"pkexec", "/usr/libexec/gsd-backlight-helper",
+                 "--get-brightness"};
+             string[] spawn_env = Environ.get ();
+             string ls_stdout;
+@@ -261,7 +261,7 @@ public class Applet : Budgie.Applet
+      */
+     private void set_brightness(int brightness) {
+         try {
+-            string[] spawn_args = {"pkexec", "/usr/lib/gnome-settings-daemon/gsd-backlight-helper",
++            string[] spawn_args = {"pkexec", "/usr/libexec/gsd-backlight-helper",
+                 "--set-brightness", brightness.to_string()};
+             string[] spawn_env = Environ.get ();
+             string ls_stdout;
+-- 
+2.9.4
+

@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 41a619051e79e7cfa42d63d47909acebc0fc744d
+%global commit0 6cdd46e0661fa3ceb8d30b0fb993811f0a7059b1
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -67,6 +67,9 @@ fi
 %{_datadir}/glib-2.0/schemas/com.github.cybre.%{name}.gschema.xml
 
 %changelog
+* Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171120.6cdd46e-1
+- build from 6cdd46e0661fa3ceb8d30b0fb993811f0a7059b1
+
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.41a6190-1
 - build from 41a619051e79e7cfa42d63d47909acebc0fc744d
 

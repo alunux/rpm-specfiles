@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 498f7f0ef4e80fd0ce9a7169ce5ff11632c9dffb
+%global commit0 0cad740849549281e63c870a80e7e021fc2a50c8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -10,10 +10,9 @@ Version:    %{build_timestamp}.%{shortcommit0}
 Release:    1%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Brightness Control Applet
-URL:        https://github.com/ilgarmehmetali/budgie-pixel-saver-applet
+URL:        https://github.com/ilgarmehmetali/budgie-brightness-control-applet
 
 Source0: https://github.com/ilgarmehmetali/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch0:  0001-rebase-on-Budgie.Popover.patch
 Patch1:  0002-fix-gsd-backlight-helper-path-on-fedora.patch
 
 BuildRequires: pkgconfig(budgie-1.0) >= 2
@@ -67,6 +66,10 @@ fi
 %{_libdir}/budgie-desktop/plugins/%{name}/
 
 %changelog
+* Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171122.0cad740-1
+- build from 0cad740849549281e63c870a80e7e021fc2a50c8
+- fix wrong URL
+
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20170815.498f7f0-1
 - build from 498f7f0ef4e80fd0ce9a7169ce5ff11632c9dffb
 - drop meson patch

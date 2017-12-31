@@ -3,8 +3,8 @@
 
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
-Version: 0.6
-Release: 3%{?dist}
+Version: 0.7.2
+Release: 1%{?dist}
 License: LGPLv2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
@@ -230,6 +230,9 @@ export LC_ALL=en_US.utf8
 %{_libdir}/liblsi-redirect.so
 
 %changelog
+* Wed Dec 20 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.6-1
+- update to 0.7.2
+
 * Tue Nov 14 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - v0.6-3
 - fix libbz2 and libudev issues
 - currently, build from master branch

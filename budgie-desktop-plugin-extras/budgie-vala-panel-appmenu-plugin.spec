@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 Name:    budgie-vala-panel-appmenu-plugin
-Version: 0.5.3
-Release: 2%{?dist}
+Version: 0.5.6
+Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for Budgie Desktop
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -36,10 +36,10 @@ Requires: appmenu-qt5
 Requires: appmenu-qt5-profile.d
 
 %package -n libappmenu-gtk-parser-devel
-Summary:	   Common development-files for libappmenu-gtk{2,3}-parser
+Summary:       Common development-files for libappmenu-gtk{2,3}-parser
 BuildArch:     noarch
 BuildRequires: gtk-doc
-Requires:	   gtk-doc
+Requires:      gtk-doc
 
 %description -n libappmenu-gtk-parser-devel
 This package contains common headers and documentation for
@@ -47,7 +47,7 @@ libappmenu-gtk{2,3}-parser.
 
 
 %package -n libappmenu-gtk2-parser
-Summary:	   Gtk2MenuShell to GMenuModel parser
+Summary:       Gtk2MenuShell to GMenuModel parser
 BuildRequires: pkgconfig(gtk+-2.0)
 
 %description -n libappmenu-gtk2-parser
@@ -57,7 +57,7 @@ This library converts Gtk2MenuShells into GMenuModels.
 %package -n libappmenu-gtk2-parser-devel
 Summary:  Development-files for libappmenu-gtk2-parser
 Requires: pkgconfig(gtk+-2.0)%{?_isa}
-Requires: libappmenu-gtk-parser-devel	== %{version}-%{release}
+Requires: libappmenu-gtk-parser-devel == %{version}-%{release}
 Requires: libappmenu-gtk2-parser%{?_isa} == %{version}-%{release}
 
 %description -n libappmenu-gtk2-parser-devel
@@ -84,7 +84,7 @@ This package contains development-files for libappmenu-gtk3-parser.
 
 %package -n appmenu-gtk-module-common
 Summary:       Common files for appmenu-gtk{2,3}-module
-BuildArch:	   noarch
+BuildArch:     noarch
 BuildRequires: systemd
 
 %description -n appmenu-gtk-module-common
@@ -123,13 +123,15 @@ and share all Unity limitations and advancements.
 %autosetup -n vala-panel-appmenu-%{version} -p1
 
 cat > appmenu-gtk-module.sh << EOF
-if [ -z "\$%{nil}GTK_MODULES" ]; then
-    export GTK_MODULES="appmenu-gtk-module"
-else
-    export GTK_MODULES="\$%{nil}GTK_MODULES:appmenu-gtk-module"
-fi
-if [ -z "\$%{nil}UBUNTU_MENUPROXY" ]; then
-    export UBUNTU_MENUPROXY=1
+if [ "$XDG_SESSION_DESKTOP" == "budgie-desktop" ] || [ "$XDG_SESSION_DESKTOP" == "mate" ] || [ "$XDG_SESSION_DESKTOP" == "xfce" ]; then
+    if [ -z "\$%{nil}GTK_MODULES" ]; then
+        export GTK_MODULES="appmenu-gtk-module"
+    else
+        export GTK_MODULES="\$%{nil}GTK_MODULES:appmenu-gtk-module"
+    fi
+    if [ -z "\$%{nil}UBUNTU_MENUPROXY" ]; then
+        export UBUNTU_MENUPROXY=1
+    fi
 fi
 EOF
 
@@ -223,10 +225,20 @@ rm -rf %{buildroot}
 %{_libdir}/gtk-3.0/modules/libappmenu-gtk-module.so
 
 %changelog
+* Wed Dec 20 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.6-1
+- update to 0.5.6
+
+* Sat Dec 02 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.5-1
+- update to 0.5.5
+
+* Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.4-1
+- set GTK_MODULES only on budgie, mate, and xfce session
+- update to 0.5.4
+
 * Tue Aug 15 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-2
 - rebuild
 
-* Fri Aug 08 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-1
+* Fri Aug 11 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.3-1
 - update to 0.5.3
 
 * Mon Aug 07 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.2-3
