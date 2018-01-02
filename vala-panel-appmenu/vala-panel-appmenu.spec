@@ -1,7 +1,7 @@
 %global _hardened_build 1
 
 Name:    vala-panel-appmenu
-Version: 0.5.6
+Version: 0.6.0
 Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
@@ -280,6 +280,9 @@ rm -rf %{buildroot}
 %{_libdir}/gtk-3.0/modules/libappmenu-gtk-module.so
 
 %changelog
+* Wed Jan 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.0-1
+- update to 0.6.0
+
 * Wed Dec 20 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.5.6-1
 - update to 0.5.6
 
