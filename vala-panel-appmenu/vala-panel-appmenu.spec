@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 Name:    vala-panel-appmenu
-Version: 0.6.0
-Release: 1%{?dist}
+Version: 0.6.1
+Release: 2%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -36,7 +36,7 @@ Requires: appmenu-gtk2-module
 Requires: appmenu-gtk3-module
 Requires: appmenu-qt
 Requires: appmenu-qt5
-Requires: appmenu-qt5-profile.d
+Requires: appmenu-qt5ct-profile.d
 
 %description
 This is Application Menu (Global Menu) plugin.
@@ -132,7 +132,6 @@ This package contains development-files for libappmenu-gtk3-parser.
 
 %package -n    appmenu-gtk-module-common
 Summary:       Common files for appmenu-gtk{2,3}-module
-BuildArch:     noarch
 BuildRequires: systemd
 
 %description -n appmenu-gtk-module-common
@@ -157,8 +156,18 @@ Requires:   appmenu-gtk-module-common == %{version}-%{release}
 Provides:   appmenu-gtk3 == %{version}-%{release}
 Provides:   appmenu-gtk3%{?_isa} == %{version}-%{release}
 
+
 %description -n appmenu-gtk3-module
 This GTK 3 module exports Gtk3MenuShells over D-Bus.
+
+%package -n appmenu-qt5ct-profile.d
+Summary:    Profile.d-config for appmenu by respecting qt5ct styles
+BuildArch:  noarch
+Requires:	qt5ct
+Requires:	setup
+
+%description -n appmenu-qt5ct-profile.d
+This package contains profile.d-config-files for appmenu by respecting qt5ct styles.
 
 
 %prep
@@ -177,15 +186,25 @@ if [ "$XDG_SESSION_DESKTOP" == "budgie-desktop" ] || [ "$XDG_SESSION_DESKTOP" ==
 fi
 EOF
 
+cat > appmenu-qt5ct.sh << EOF
+export QT_QPA_PLATFORMTHEME=qt5ct
+EOF
+
+cat > appmenu-qt5ct.csh << EOF
+setenv QT_QPA_PLATFORMTHEME qt5ct
+EOF
 
 %build
 %cmake -DGSETTINGS_COMPILE=OFF -DENABLE_XFCE=ON -DENABLE_VALAPANEL=OFF \
-       -DENABLE_BUDGIE=OFF -DENABLE_MATE=ON -DENABLE_UNITY_GTK_MODULE=ON
+       -DENABLE_BUDGIE=OFF -DENABLE_MATE=ON -DENABLE_UNITY_GTK_MODULE=ON \
+       -DMAKE_BOLD_APPNAME=ON
 %make_build
 
 %install
 %make_install DESTDIR=%{buildroot}
-install -Dm 0644 appmenu-gtk-module.sh %{buildroot}%{_sysconfdir}/profile.d/appmenu-gtk-module.sh
+%{__install} -Dm 0644 appmenu-gtk-module.sh %{buildroot}%{_sysconfdir}/profile.d/appmenu-gtk-module.sh
+%{__install} -Dm 0644 appmenu-qt5ct.sh %{buildroot}%{_sysconfdir}/profile.d/appmenu-qt5ct.sh
+%{__install} -Dm 0644 appmenu-qt5ct.csh %{buildroot}%{_sysconfdir}/profile.d/appmenu-qt5ct.csh
 %find_lang %{name}
 
 %{__mkdir} -p %{buildroot}%{_userunitdir}/default.target.wants
@@ -249,7 +268,7 @@ rm -rf %{buildroot}
 %{_datadir}/xfce4/panel/plugins/appmenu.desktop
 
 %files -n libappmenu-gtk-parser-devel
-%{_includedir}/appmenu-gtk-module
+%{_includedir}/appmenu-gtk-parser
 
 %files -n libappmenu-gtk2-parser
 %license LICENSE*
@@ -270,6 +289,8 @@ rm -rf %{buildroot}
 %files -n appmenu-gtk-module-common
 %license LICENSE
 %config %{_sysconfdir}/profile.d/appmenu-gtk-module.*
+%{_libexecdir}/vala-panel/appmenu-registrar
+%{_datadir}/dbus-1/services/com.canonical.AppMenu.Registrar.service
 %{_datadir}/glib-2.0/schemas/*
 %{_userunitdir}/appmenu-gtk-module.service
 
@@ -279,7 +300,17 @@ rm -rf %{buildroot}
 %files -n appmenu-gtk3-module
 %{_libdir}/gtk-3.0/modules/libappmenu-gtk-module.so
 
+%files -n appmenu-qt5ct-profile.d
+%{_sysconfdir}/profile.d/appmenu-qt5ct.*
+
 %changelog
+* Sun Jan 28 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-2
+- force appmenu to use qt5ct as QT_QPA_PLATFORMTHEME
+- set -DMAKE_BOLD_APPNAME=ON to make appname menu font bold
+
+* Sun Jan 07 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-1
+- update to 0.6.1
+
 * Wed Jan 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.0-1
 - update to 0.6.0
 
