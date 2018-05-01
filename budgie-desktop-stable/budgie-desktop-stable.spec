@@ -3,18 +3,23 @@
 
 Name:       budgie-desktop
 Version:    10.4
-Release:    5%{?dist}
+Release:    7%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
+Patch0:  0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+Patch1:  0001-Initialise-system-tray-via-idle-1249.patch
+Patch2:  0001-Add-option-for-libmutter-2.patch
+Patch3:  0001-Switch-to-checking-GSD-version-for-the-build-1319.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.46.0
 BuildRequires: pkgconfig(gnome-bluetooth-1.0) >= 3.18.0
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.18.0
+BuildRequires: pkgconfig(gnome-settings-daemon) >= 3.18.0
 BuildRequires: pkgconfig(gobject-2.0) >= 2.44.0
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.44.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.18.0
@@ -31,8 +36,11 @@ BuildRequires: pkgconfig(libmutter) >= 3.18.0
 %if 0%{?fedora} == 26
 BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
 %endif
-%if 0%{?fedora} >= 27
+%if 0%{?fedora} == 27
 BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
+%endif
+%if 0%{?fedora} >= 28
+BuildRequires: pkgconfig(libmutter-2) >= 3.18.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -197,6 +205,15 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-7
+- cherry-pick https://github.com/budgie-desktop/budgie-desktop/commit/fb0ef1e21a50c983dbc3a13ff446c5c838133da8
+- cherry-pick https://github.com/budgie-desktop/budgie-desktop/commit/bf07458143599f9891606e97a727234cb07b8a99
+- rebuild
+
+* Tue Apr 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-6
+- cherry-pick https://github.com/budgie-desktop/budgie-desktop/commit/e6fbc45256c9f5119a0d696255b95773659c9fb9
+- rebuild
+
 * Mon Nov 20 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-5
 - rebuild for F27
 

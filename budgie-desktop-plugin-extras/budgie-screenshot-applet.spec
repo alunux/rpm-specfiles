@@ -7,7 +7,7 @@
 
 Name:       budgie-screenshot-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Screenshot Applet
 URL:        https://github.com/cybre/budgie-screenshot-applet
@@ -73,6 +73,9 @@ fi
 
 
 %changelog
+* Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.0eefbe2-2
+- rebuild
+
 * Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171122.0eefbe2-1
 - build from 0eefbe239219912d138f06d98a4f865bb31196b9
 

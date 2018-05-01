@@ -2,7 +2,7 @@
 
 Name:    vala-panel-appmenu
 Version: 0.6.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -304,6 +304,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/profile.d/appmenu-qt5ct.*
 
 %changelog
+* Sun Apr 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-3
+- rebuild
+
 * Sun Jan 28 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-2
 - force appmenu to use qt5ct as QT_QPA_PLATFORMTHEME
 - set -DMAKE_BOLD_APPNAME=ON to make appname menu font bold

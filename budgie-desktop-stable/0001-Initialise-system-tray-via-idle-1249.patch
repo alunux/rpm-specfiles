@@ -1,0 +1,68 @@
+From a818a550cd8e81d01865dcad72161518cc09756c Mon Sep 17 00:00:00 2001
+From: David Mohammed <fossfreedom@ubuntu.com>
+Date: Sun, 1 Apr 2018 18:05:23 +0100
+Subject: [PATCH] Initialise system tray via idle #1249  Initialise the startup
+ of the system tray via GLib idle.  This allows the system tray startup fully
+ stopping black background  and icon positioning issues.
+
+---
+ src/applets/tray/TrayApplet.vala | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
+
+diff --git a/src/applets/tray/TrayApplet.vala b/src/applets/tray/TrayApplet.vala
+index 351ba691..596630e7 100644
+--- a/src/applets/tray/TrayApplet.vala
++++ b/src/applets/tray/TrayApplet.vala
+@@ -1,8 +1,8 @@
+ /*
+  * This file is part of budgie-desktop
+- * 
++ *
+  * Copyright © 2015-2017 Budgie Desktop Developers
+- * 
++ *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation; either version 2 of the License, or
+@@ -39,22 +39,25 @@ public class TrayApplet : Budgie.Applet
+         box.vexpand = false;
+         vexpand = false;
+ 
+-        map.connect_after(()=> {
+-            maybe_integrate_tray();
+-        });
++        Idle.add(()=> {
++            map.connect_after(()=> {
++                maybe_integrate_tray();
++            });
+ 
+ 
+-        show_all();
+-        panel_size_changed.connect((p,i,s)=> {
+-            this.icon_size = s;
+-            if (tray != null) {
+-                tray.set_icon_size(icon_size);
+-                queue_resize();
+-                tray.queue_resize();
+-            }
+-        });
++            show_all();
++            panel_size_changed.connect((p,i,s)=> {
++                this.icon_size = s;
++                if (tray != null) {
++                    tray.set_icon_size(icon_size);
++                    queue_resize();
++                    tray.queue_resize();
++                }
++            });
+ 
+-        size_allocate.connect(on_size_allocate);
++            size_allocate.connect(on_size_allocate);
++            return false;
++        });
+     }
+ 
+     public override void panel_position_changed(Budgie.PanelPosition position)
+-- 
+2.14.3
+

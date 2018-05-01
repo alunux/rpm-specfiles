@@ -7,7 +7,7 @@
 
 Name:       budgie-brightness-control-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Brightness Control Applet
 URL:        https://github.com/ilgarmehmetali/budgie-brightness-control-applet
@@ -66,6 +66,9 @@ fi
 %{_libdir}/budgie-desktop/plugins/%{name}/
 
 %changelog
+* Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.0cad740-2
+- rebuild
+
 * Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171122.0cad740-1
 - build from 0cad740849549281e63c870a80e7e021fc2a50c8
 - fix wrong URL

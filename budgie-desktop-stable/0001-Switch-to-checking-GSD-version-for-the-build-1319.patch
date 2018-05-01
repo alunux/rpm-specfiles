@@ -1,0 +1,61 @@
+From fb0ef1e21a50c983dbc3a13ff446c5c838133da8 Mon Sep 17 00:00:00 2001
+From: David Mohammed <fossfreedom@ubuntu.com>
+Date: Sun, 18 Feb 2018 21:16:42 +0000
+Subject: [PATCH] Switch to checking GSD version for the build #1319 GNOME 3.24
+ split the monolithic gnome-settings-daemon into individual components. With
+ each subsequent release the component list is being reduced; capability is
+ being pushed into GNOME Shell itself. Budgie Desktop v10.4.x needs to adapt
+ to this forced change by checking the GSD version and compiling those
+ components that correspond to the upcoming stable release. This commit
+ introduces support for the upcoming GNOME 3.28 release of GSD (beta 3.27.90
+ of GSD)
+
+---
+ src/session/meson.build | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/src/session/meson.build b/src/session/meson.build
+index 99a8fb23..f5c4326f 100644
+--- a/src/session/meson.build
++++ b/src/session/meson.build
+@@ -9,7 +9,6 @@ gnome_session_components = [
+ ]
+ 
+ gnome_session_324_components = [
+-    'org.gnome.SettingsDaemon.A11yKeyboard',
+     'org.gnome.SettingsDaemon.A11ySettings',
+     'org.gnome.SettingsDaemon.Clipboard',
+     'org.gnome.SettingsDaemon.Color',
+@@ -29,6 +28,10 @@ gnome_session_324_components = [
+     'org.gnome.SettingsDaemon.XSettings',
+ ]
+ 
++gsd_324_key = [
++    'org.gnome.SettingsDaemon.A11yKeyboard'
++]
++
+ gsd_324_max = [
+     'org.gnome.SettingsDaemon.Orientation',
+     'org.gnome.SettingsDaemon.XRANDR',
+@@ -45,11 +48,14 @@ if with_polkit == true
+     budgie_components += 'budgie-polkit'
+ endif
+ 
+-# Merge the list depending on the GNOME version. We pick mutter arbitrarily.
+-if dep_mutter.version().version_compare('>=3.25.4')
++dep_gsd = dependency('gnome-settings-daemon', version: gnome_minimum_version)
++# Merge the list depending on the gnome-settings-daemon version.
++if dep_gsd.version().version_compare('>=3.27.90')
+     session_components = budgie_components + gnome_session_324_components
+-elif dep_mutter.version().version_compare('>=3.23.3')
+-    session_components = budgie_components + gnome_session_324_components + gsd_324_max
++elif dep_gsd.version().version_compare('>=3.25.4')
++    session_components = budgie_components + gnome_session_324_components + gsd_324_key
++elif dep_gsd.version().version_compare('>=3.23.3')
++    session_components = budgie_components + gnome_session_324_components + gsd_324_key + gsd_324_max
+ else
+     session_components = gnome_session_components + budgie_components
+ endif
+-- 
+2.14.3
+

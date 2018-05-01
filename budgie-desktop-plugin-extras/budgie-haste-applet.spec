@@ -7,7 +7,7 @@
 
 Name:       budgie-haste-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Haste Applet
 URL:        https://github.com/cybre/budgie-haste-applet
@@ -67,6 +67,9 @@ fi
 %{_datadir}/glib-2.0/schemas/com.github.cybre.%{name}.gschema.xml
 
 %changelog
+* Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.6cdd46e-2
+- rebuild
+
 * Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171120.6cdd46e-1
 - build from 6cdd46e0661fa3ceb8d30b0fb993811f0a7059b1
 

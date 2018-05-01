@@ -2,7 +2,7 @@
 
 Name:    budgie-vala-panel-appmenu-plugin
 Version: 0.6.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for Budgie Desktop
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -120,8 +120,8 @@ This GTK 3 module exports Gtk3MenuShells over D-Bus.
 %package -n appmenu-qt5ct-profile.d
 Summary:    Profile.d-config for appmenu by respecting qt5ct styles
 BuildArch:  noarch
-Requires:	qt5ct
-Requires:	setup
+Requires:   qt5ct
+Requires:   setup
 
 %description -n appmenu-qt5ct-profile.d
 This package contains profile.d-config-files for appmenu by respecting qt5ct styles.
@@ -248,6 +248,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/profile.d/appmenu-qt5ct.*
 
 %changelog
+* Tue Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-3
+- rebuild
+
 * Sun Jan 28 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-2
 - force appmenu to use qt5ct as QT_QPA_PLATFORMTHEME
 - set -DMAKE_BOLD_APPNAME=ON to make appname menu font bold

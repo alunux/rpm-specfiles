@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 d6f3519f04d8c619f7d1797ad24a26357e578ba9
+%global commit0 7e7e7ccb8114d8709ce5d1c3ec98385feefb62f8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -20,6 +20,7 @@ BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.46.0
 BuildRequires: pkgconfig(gnome-bluetooth-1.0) >= 3.18.0
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.18.0
+BuildRequires: pkgconfig(gnome-settings-daemon) >= 3.18.0
 BuildRequires: pkgconfig(gobject-2.0) >= 2.44.0
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.44.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.18.0
@@ -36,8 +37,11 @@ BuildRequires: pkgconfig(libmutter) >= 3.18.0
 %if 0%{?fedora} == 26
 BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
 %endif
-%if 0%{?fedora} >= 27
+%if 0%{?fedora} == 27
 BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
+%endif
+%if 0%{?fedora} >= 28
+BuildRequires: pkgconfig(libmutter-2) >= 3.18.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -208,6 +212,21 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Tue May 01 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180501.7e7e7cc-1
+- build from commit 7e7e7ccb8114d8709ce5d1c3ec98385feefb62f8
+
+* Tue May 01 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180501.995e85e-1
+- build from commit 995e85e59be5b653311b97fb115b50521030bb75
+
+* Sun Apr 15 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180415.298b9ae-1
+- build from commit 298b9ae48a6c6824e25fed8df65bcf1726900a56
+- add gnome-settings-daemon-devel to build requirement
+- dropped the libmutter-2 patch
+
+* Tue Apr 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180403.e6fbc45-1
+- build from commit e6fbc45256c9f5119a0d696255b95773659c9fb9
+- bring patch for libmutter-2
+
 * Thu Feb 08 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180208.d6f3519-1
 - build from commit d6f3519f04d8c619f7d1797ad24a26357e578ba9
 

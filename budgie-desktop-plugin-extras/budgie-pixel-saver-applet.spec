@@ -7,7 +7,7 @@
 
 Name:       budgie-pixel-saver-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Pixel Saver
 URL:        https://github.com/ilgarmehmetali/budgie-pixel-saver-applet
@@ -69,6 +69,9 @@ fi
 %{_datadir}/glib-2.0/schemas/net.milgar.budgie-pixel-saver.gschema.xml
 
 %changelog
+* Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.30c1f94-2
+- rebuild
+
 * Wed Nov 22 2017 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20171122.30c1f94-1
 - build from 30c1f94683b17b6e47b9676f97e99a19db6ecb20
 
