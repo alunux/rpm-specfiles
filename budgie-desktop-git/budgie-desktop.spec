@@ -1,13 +1,13 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 7e7e7ccb8114d8709ce5d1c3ec98385feefb62f8
+%global commit0 15c960ccd7cb58b9adad557115956a80e0508de7
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -134,7 +134,11 @@ fi
 
 %build
 export LC_ALL=en_US.utf8
+%if 0%{?fedora} < 28
 %meson
+%else
+%meson -Dwith-desktop-icons=none
+%endif
 %meson_build
 
 %install
@@ -212,6 +216,15 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Mon May 14 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180514.15c960c-2
+- disable desktop icons on Fedora 28
+
+* Sat May 05 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180505.15c960c-1
+- build from commit 15c960ccd7cb58b9adad557115956a80e0508de7
+
+* Thu May 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180503.f3ce3a6-1
+- build from commit f3ce3a619b225447d733982af927b3968f9a28f0
+
 * Tue May 01 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180501.7e7e7cc-1
 - build from commit 7e7e7ccb8114d8709ce5d1c3ec98385feefb62f8
 

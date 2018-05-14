@@ -3,7 +3,7 @@
 
 Name:       budgie-desktop
 Version:    10.4
-Release:    7%{?dist}
+Release:    8%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
@@ -127,7 +127,11 @@ Development files for the Budgie Desktop
 
 %build
 export LC_ALL=en_US.utf8
+%if 0%{?fedora} < 28
 %meson
+%else
+%meson -Dwith-desktop-icons=none
+%endif
 %meson_build
 
 %install
@@ -205,6 +209,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Mon May 14 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-8
+- disable desktop icons on Fedora 28
+
 * Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-7
 - cherry-pick https://github.com/budgie-desktop/budgie-desktop/commit/fb0ef1e21a50c983dbc3a13ff446c5c838133da8
 - cherry-pick https://github.com/budgie-desktop/budgie-desktop/commit/bf07458143599f9891606e97a727234cb07b8a99
