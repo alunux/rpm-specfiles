@@ -3,16 +3,13 @@
 
 Name:       budgie-desktop
 Version:    10.4
-Release:    8%{?dist}
+Release:    9%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/budgie-desktop/budgie-desktop
 
 Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
 Patch0:  0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
-Patch1:  0001-Initialise-system-tray-via-idle-1249.patch
-Patch2:  0001-Add-option-for-libmutter-2.patch
-Patch3:  0001-Switch-to-checking-GSD-version-for-the-build-1319.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -69,9 +66,6 @@ Requires: %{name}-libs
 Requires: %{name}-schemas
 Requires: %{name}-rundialog
 
-Recommends: arc-theme
-Recommends: arc-icon-theme
-Recommends: moka-icon-theme
 
 %description
 Budgie is the flagship desktop of the Solus, and is an Solus project.
