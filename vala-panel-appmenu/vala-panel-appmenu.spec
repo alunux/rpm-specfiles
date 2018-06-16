@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 Name:    vala-panel-appmenu
-Version: 0.6.1
-Release: 3%{?dist}
+Version: 0.6.94
+Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
 URL:     https://github.com/rilian-la-te/vala-panel-appmenu
@@ -13,9 +13,9 @@ BuildRequires: cmake >= 2.8.0
 BuildRequires: gettext
 BuildRequires: vala >= 0.32.0
 BuildRequires: pkgconfig(gtk+-2.0) >= 2.24.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.20.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
 BuildRequires: pkgconfig(libpeas-1.0) >= 1.2.0
-BuildRequires: pkgconfig(libbamf3)
+BuildRequires: pkgconfig(libbamf3) >= 0.5.0
 BuildRequires: pkgconfig(libmatepanelapplet-4.0)
 BuildRequires: pkgconfig(libxfce4panel-2.0)
 BuildRequires: pkgconfig(libxfconf-0)
@@ -304,6 +304,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/profile.d/appmenu-qt5ct.*
 
 %changelog
+* Sun Apr 29 2018 Stepan Usatyuk <stepus53@gmail.com> - 0.6.94-1
+- update to 0.6.94
+
 * Sun Apr 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-3
 - rebuild
 
