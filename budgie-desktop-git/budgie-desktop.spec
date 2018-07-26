@@ -1,19 +1,19 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 15c960ccd7cb58b9adad557115956a80e0508de7
+%global commit0 5cd2ad6d211b9e1d02309ea0a531906e12969e5b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    1%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
-URL:        https://github.com/budgie-desktop/budgie-desktop
+URL:        https://github.com/solus-project/budgie-desktop
 
-Source0: https://github.com/%{name}/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch0:  0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Patch0:  0001-wm-Add-option-for-libmutter-3.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -40,8 +40,11 @@ BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
 %if 0%{?fedora} == 27
 BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
 %endif
-%if 0%{?fedora} >= 28
+%if 0%{?fedora} == 28
 BuildRequires: pkgconfig(libmutter-2) >= 3.18.0
+%endif
+%if 0%{?fedora} >= 29
+BuildRequires: pkgconfig(libmutter-3) >= 3.18.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -70,9 +73,8 @@ Requires: %{name}-libs
 Requires: %{name}-schemas
 Requires: %{name}-rundialog
 
-Recommends: arc-theme
-Recommends: arc-icon-theme
-Recommends: moka-icon-theme
+Recommends: adapta-gtk-theme
+Recommends: pop-icon-theme
 
 %description
 Budgie is the flagship desktop of the Solus, and is an Solus project.
@@ -130,7 +132,6 @@ if [ ! -d .git ]; then
     git config --local --bool core.bare false
     git reset --hard
 fi
-%patch0 -p1
 
 %build
 export LC_ALL=en_US.utf8
@@ -216,6 +217,24 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Thu Jul 26 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180726.5cd2ad6-1
+- build from commit 5cd2ad6d211b9e1d02309ea0a531906e12969e5b
+
+* Tue Jul 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180703.b85ed82-2
+- substitute arc-theme with adapta-gtk-theme
+- substitute arc-icon-theme and moka-icon-theme with pop-icon-theme
+
+* Thu Jun 28 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180628.b85ed82-1
+- build from commit b85ed82c6ed6a8d76d15377aac0a0c3959cb2f8e
+
+* Fri Jun 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180622.6aa57a9-1
+- build from commit 6aa57a9b2540b02dd1baf222ea689176cb167396
+
+* Sun Jun 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180610.558455e-1
+- build from commit 558455e9ade9d42175ed917d06994011c2418eb2
+- update URL of Budgie project
+- drop CSS patch
+
 * Mon May 14 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180514.15c960c-2
 - disable desktop icons on Fedora 28
 

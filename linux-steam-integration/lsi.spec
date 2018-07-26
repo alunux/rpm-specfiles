@@ -4,7 +4,7 @@
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
 Version: 0.7.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPLv2.1
 URL:     https://github.com/solus-project/linux-steam-integration
 
@@ -175,6 +175,7 @@ Requires: %{name}-libs(x86-64)
 Requires: %{name}-libs(x86-32)
 
 Source0: https://github.com/solus-project/linux-steam-integration/releases/download/v%{version}/linux-steam-integration-%{version}.tar.xz
+Patch0:  0001-intercept-Handle-override-of-libva.so.1-libva.so.2-l.patch
 
 %description
 A helper shim to enable better Steam* integration on Linux systems. This is part
@@ -230,6 +231,9 @@ export LC_ALL=en_US.utf8
 %{_libdir}/liblsi-redirect.so
 
 %changelog
+* Mon May 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-3
+- fix libva and libva-x11 ABI bump
+
 * Sun Apr 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-2
 - update to 0.7.2
 

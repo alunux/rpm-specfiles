@@ -3,12 +3,12 @@
 
 Name:       budgie-desktop
 Version:    10.4
-Release:    9%{?dist}
+Release:    10%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
-URL:        https://github.com/budgie-desktop/budgie-desktop
+URL:        https://github.com/solus-project/budgie-desktop
 
-Source0: https://github.com/budgie-desktop/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
+Source0: https://github.com/solus-project/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
 Patch0:  0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
@@ -66,6 +66,8 @@ Requires: %{name}-libs
 Requires: %{name}-schemas
 Requires: %{name}-rundialog
 
+Recommends: adapta-gtk-theme
+Recommends: pop-icon-theme
 
 %description
 Budgie is the flagship desktop of the Solus, and is an Solus project.
@@ -203,6 +205,10 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Tue Jul 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-10
+- recommends: adapta-gtk-theme and pop-icon-theme
+- update URL of the project
+
 * Mon May 14 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-8
 - disable desktop icons on Fedora 28
 
