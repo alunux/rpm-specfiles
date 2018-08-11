@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 5cd2ad6d211b9e1d02309ea0a531906e12969e5b
+%global commit0 cb35f5b4f1c71d8dfa3aa8f78298b3825ce85cc2
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -13,7 +13,6 @@ Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch0:  0001-wm-Add-option-for-libmutter-3.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -192,6 +191,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/system-tray-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/task-list-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/workspace-switcher-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/apps/my-caffeine-on-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/status/caffeine-cup-empty.svg
+%{_datadir}/icons/hicolor/scalable/status/caffeine-cup-full.svg
 %{_datadir}/icons/hicolor/scalable/status/caps-lock-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/status/num-lock-symbolic.svg
 %{_datadir}/xsessions/budgie-desktop.desktop
@@ -217,6 +219,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Sat Aug 11 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180726.cb35f5b-1
+- build from commit cb35f5b4f1c71d8dfa3aa8f78298b3825ce85cc2
+
 * Thu Jul 26 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180726.5cd2ad6-1
 - build from commit 5cd2ad6d211b9e1d02309ea0a531906e12969e5b
 
