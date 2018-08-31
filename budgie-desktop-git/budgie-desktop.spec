@@ -7,12 +7,14 @@
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    1%{?dist}
+Release:    2%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Patch0:  1523.patch
+Patch1:  0001-Drop-default-value-of-non-automatic-property.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -127,10 +129,14 @@ Development files for the Budgie Desktop
 %prep
 %setup -q -n %{name}-%{commit0}
 if [ ! -d .git ]; then
-    git clone --bare --depth 1 https://github.com/budgie-desktop/budgie-desktop.git .git
+    git clone --bare --depth 1 https://github.com/solus-project/budgie-desktop.git .git
     git config --local --bool core.bare false
     git reset --hard
 fi
+%if 0%{?fedora} >= 29
+%patch0 -p1
+%endif
+%patch1 -p1
 
 %build
 export LC_ALL=en_US.utf8
@@ -192,14 +198,17 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/task-list-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/workspace-switcher-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/my-caffeine-on-symbolic.svg
-%{_datadir}/icons/hicolor/scalable/status/caffeine-cup-empty.svg
-%{_datadir}/icons/hicolor/scalable/status/caffeine-cup-full.svg
+%{_datadir}/icons/hicolor/scalable/status/budgie-caffeine-cup-empty.svg
+%{_datadir}/icons/hicolor/scalable/status/budgie-caffeine-cup-full.svg
 %{_datadir}/icons/hicolor/scalable/status/caps-lock-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/status/num-lock-symbolic.svg
 %{_datadir}/xsessions/budgie-desktop.desktop
 
 %files schemas
 %{_datadir}/glib-2.0/schemas/com.solus-project.*.gschema.xml
+%if 0%{?fedora} >= 29
+%{_datadir}/glib-2.0/schemas/20_solus-project.budgie.wm.gschema.override
+%endif
 
 %files libs
 %{_libdir}/libbudgie*.so.*
@@ -219,7 +228,11 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
-* Sat Aug 11 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180726.cb35f5b-1
+* Fri Aug 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180826.cb35f5b-2
+- bring libmutter-3 pacth
+- fix build issue with Vala >= 0.41
+
+* Sat Aug 11 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180811.cb35f5b-1
 - build from commit cb35f5b4f1c71d8dfa3aa8f78298b3825ce85cc2
 
 * Thu Jul 26 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180726.5cd2ad6-1
