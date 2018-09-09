@@ -7,14 +7,15 @@
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    3%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch0:  1523.patch
-Patch1:  0001-Drop-default-value-of-non-automatic-property.patch
+Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
+Patch1:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
+Patch2:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -69,6 +70,9 @@ Requires: gnome-settings-daemon
 Requires: control-center
 Requires: gnome-screensaver
 Requires: network-manager-applet
+
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
 
 Requires: %{name}-libs
 Requires: %{name}-schemas
@@ -135,6 +139,7 @@ if [ ! -d .git ]; then
 fi
 %if 0%{?fedora} >= 29
 %patch0 -p1
+%patch2 -p1
 %endif
 %patch1 -p1
 
@@ -228,8 +233,12 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Mon Sep 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180910.cb35f5b-3
+- bring budgie-wm gschema patch
+- rebuild for GNOME 3.30
+
 * Fri Aug 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180826.cb35f5b-2
-- bring libmutter-3 pacth
+- bring libmutter-3 patch
 - fix build issue with Vala >= 0.41
 
 * Sat Aug 11 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180811.cb35f5b-1
