@@ -1,13 +1,13 @@
 %global _hardened_build 1
 
 Name:    budgie-vala-panel-appmenu-plugin
-Version: 0.6.1
-Release: 3%{?dist}
+Version: 0.7.1
+Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for Budgie Desktop
-URL:     https://github.com/rilian-la-te/vala-panel-appmenu
+URL:     https://gitlab.com/vala-panel-project/vala-panel-appmenu
 
-Source0: https://github.com/rilian-la-te/vala-panel-appmenu/releases/download/%{version}/vala-panel-appmenu-%{version}.tar.gz
+Source0: https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/c0f85b42a2a228ad8c3413357e02fb28/vala-panel-appmenu-0.7.1.tar.xz
 
 BuildRequires: cmake >= 2.8.0
 BuildRequires: gettext
@@ -248,7 +248,14 @@ rm -rf %{buildroot}
 %{_sysconfdir}/profile.d/appmenu-qt5ct.*
 
 %changelog
-* Tue Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-3
+* Mon Sep 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.1-1
+- update to 0.7.1
+
+* Thu Aug 30 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.0-1
+- update to 0.7.0
+- update project URL
+
+* Sun Apr 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-3
 - rebuild
 
 * Sun Jan 28 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-2

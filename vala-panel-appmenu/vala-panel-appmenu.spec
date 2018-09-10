@@ -1,13 +1,13 @@
 %global _hardened_build 1
 
 Name:    vala-panel-appmenu
-Version: 0.6.1
-Release: 3%{?dist}
+Version: 0.7.1
+Release: 1%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for vala-panel
-URL:     https://github.com/rilian-la-te/vala-panel-appmenu
+URL:     https://gitlab.com/vala-panel-project/vala-panel-appmenu
 
-Source0: https://github.com/rilian-la-te/vala-panel-appmenu/releases/download/%{version}/%{name}-%{version}.tar.gz
+Source0: https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/c0f85b42a2a228ad8c3413357e02fb28/vala-panel-appmenu-0.7.1.tar.xz
 
 BuildRequires: cmake >= 2.8.0
 BuildRequires: gettext
@@ -163,8 +163,8 @@ This GTK 3 module exports Gtk3MenuShells over D-Bus.
 %package -n appmenu-qt5ct-profile.d
 Summary:    Profile.d-config for appmenu by respecting qt5ct styles
 BuildArch:  noarch
-Requires:	qt5ct
-Requires:	setup
+Requires:   qt5ct
+Requires:   setup
 
 %description -n appmenu-qt5ct-profile.d
 This package contains profile.d-config-files for appmenu by respecting qt5ct styles.
@@ -304,6 +304,13 @@ rm -rf %{buildroot}
 %{_sysconfdir}/profile.d/appmenu-qt5ct.*
 
 %changelog
+* Mon Sep 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.1-1
+- update to 0.7.1
+
+* Thu Aug 30 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.0-1
+- update to 0.7.0
+- update project URL
+
 * Sun Apr 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.6.1-3
 - rebuild
 
