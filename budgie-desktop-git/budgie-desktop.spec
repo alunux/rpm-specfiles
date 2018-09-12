@@ -7,7 +7,7 @@
 
 Name:       budgie-desktop
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    3%{?dist}
+Release:    4%{?dist}
 License:    GPLv2 and LGPLv2.1
 Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
@@ -16,6 +16,7 @@ Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{n
 Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
 Patch1:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
 Patch2:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
+Patch3:  0001-temporary-solution-for-window-button-layout.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -140,6 +141,7 @@ fi
 %if 0%{?fedora} >= 29
 %patch0 -p1
 %patch2 -p1
+%patch3 -p1
 %endif
 %patch1 -p1
 
@@ -233,6 +235,9 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
+* Thu Sep 13 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180913.cb35f5b-4
+- fix window button-layout issue
+
 * Mon Sep 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180910.cb35f5b-3
 - bring budgie-wm gschema patch
 - rebuild for GNOME 3.30
