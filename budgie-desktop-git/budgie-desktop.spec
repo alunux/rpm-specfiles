@@ -13,10 +13,16 @@ Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+
+# [PATCH] Port to mutter-3 from GNOME 3.30
 Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
+# [PATCH] Drop default value of non-automatic property
 Patch1:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
+# [PATCH] Correct GNOME button-layout schema path
 Patch2:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
-Patch3:  0001-temporary-solution-for-window-button-layout.patch
+# [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
+Patch3:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+Patch4:  0001-temporary-solution-for-window-button-layout.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -141,9 +147,10 @@ fi
 %if 0%{?fedora} >= 29
 %patch0 -p1
 %patch2 -p1
-%patch3 -p1
+%patch4 -p1
 %endif
 %patch1 -p1
+%patch3 -p1
 
 %build
 export LC_ALL=en_US.utf8

@@ -9,7 +9,17 @@ Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
-Patch0:  0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+
+%if 0%{?fedora} >= 29
+# [PATCH] Port to mutter-3 from GNOME 3.30
+Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
+# [PATCH] Correct GNOME button-layout schema path
+Patch1:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
+# [PATCH] Drop default value of non-automatic property
+Patch2:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
+%endif
+# [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
+Patch3:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -36,8 +46,11 @@ BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
 %if 0%{?fedora} == 27
 BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
 %endif
-%if 0%{?fedora} >= 28
+%if 0%{?fedora} == 28
 BuildRequires: pkgconfig(libmutter-2) >= 3.18.0
+%endif
+%if 0%{?fedora} >= 29
+BuildRequires: pkgconfig(libmutter-3) >= 3.18.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -186,6 +199,9 @@ fi
 
 %files schemas
 %{_datadir}/glib-2.0/schemas/com.solus-project.*.gschema.xml
+%if 0%{?fedora} >= 29
+%{_datadir}/glib-2.0/schemas/20_solus-project.budgie.wm.gschema.override
+%endif
 
 %files libs
 %{_libdir}/libbudgie*.so.*
@@ -205,7 +221,7 @@ fi
 %{_datadir}/vala/vapi/budgie-1.0.*
 
 %changelog
-* Tue Jul 03 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-10
+* Sat Sep 15 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 10.4-10
 - recommends: adapta-gtk-theme and pop-icon-theme
 - update URL of the project
 

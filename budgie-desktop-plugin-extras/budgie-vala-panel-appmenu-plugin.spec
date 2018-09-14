@@ -9,6 +9,7 @@ URL:     https://gitlab.com/vala-panel-project/vala-panel-appmenu
 
 Source0: https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/c0f85b42a2a228ad8c3413357e02fb28/vala-panel-appmenu-0.7.1.tar.xz
 
+BuildRequires: bamf-daemon
 BuildRequires: cmake >= 2.8.0
 BuildRequires: gettext
 BuildRequires: vala >= 0.32.0
