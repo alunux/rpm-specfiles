@@ -9,17 +9,7 @@ Summary:    An elegant desktop with GNOME integration
 URL:        https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/budgie-desktop/releases/download/v%{version}/budgie-desktop-%{version}.tar.xz
-
-%if 0%{?fedora} >= 29
-# [PATCH] Port to mutter-3 from GNOME 3.30
-Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
-# [PATCH] Correct GNOME button-layout schema path
-Patch1:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
-# [PATCH] Drop default value of non-automatic property
-Patch2:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
-%endif
-# [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
-Patch3:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+Patch0:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
