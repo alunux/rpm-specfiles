@@ -5,14 +5,16 @@
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
-Name:       budgie-desktop
-Version:    %{build_timestamp}.%{shortcommit0}
-Release:    4%{?dist}
-License:    GPLv2 and LGPLv2.1
-Summary:    An elegant desktop with GNOME integration
-URL:        https://github.com/solus-project/budgie-desktop
+Name:    budgie-desktop
+Version: %{build_timestamp}.%{shortcommit0}
+Release: 5%{?dist}
+License: GPLv2 and LGPLv2.1
+Summary: An elegant desktop with GNOME integration
+URL:     https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+
+############## List of patches ##############
 
 # [PATCH] Port to mutter-3 from GNOME 3.30
 Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
@@ -22,49 +24,48 @@ Patch1:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-deskt
 Patch2:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
 # [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
 Patch3:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
+# [PATCH] temporary solution for window button layout
 Patch4:  0001-temporary-solution-for-window-button-layout.patch
+# [PATCH] Fix errors were caused by desktop-file-validate
+Patch5:  https://github.com/alunux/budgie-desktop/commit/2762bebcde92902c08bb25ac4ea5eef022ecd502.patch
 
-BuildRequires: pkgconfig(accountsservice) >= 0.6
+############## End of patch list ##############
+
+BuildRequires: pkgconfig(accountsservice) >= 0.6.40
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.46.0
-BuildRequires: pkgconfig(gnome-bluetooth-1.0) >= 3.18.0
-BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.18.0
-BuildRequires: pkgconfig(gnome-settings-daemon) >= 3.18.0
+BuildRequires: pkgconfig(gnome-bluetooth-1.0) >= 3.22.0
+BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.22.0
+BuildRequires: pkgconfig(gnome-settings-daemon) >= 3.22.0
 BuildRequires: pkgconfig(gobject-2.0) >= 2.44.0
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.44.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.18.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
 BuildRequires: pkgconfig(ibus-1.0) >= 1.5.11
-BuildRequires: pkgconfig(libgnome-menu-3.0) >= 3.10.1
+BuildRequires: pkgconfig(libgnome-menu-3.0) >= 3.10.3
 BuildRequires: pkgconfig(libpeas-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpeas-gtk-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpulse) >= 2
 BuildRequires: pkgconfig(libpulse-mainloop-glib) >= 2
 BuildRequires: pkgconfig(libwnck-3.0) >= 3.14.0
-%if 0%{?fedora} <= 25
-BuildRequires: pkgconfig(libmutter) >= 3.18.0
-%endif
-%if 0%{?fedora} == 26
-BuildRequires: pkgconfig(libmutter-0) >= 3.18.0
-%endif
 %if 0%{?fedora} == 27
-BuildRequires: pkgconfig(libmutter-1) >= 3.18.0
+BuildRequires: pkgconfig(libmutter-1) >= 3.26.0
 %endif
 %if 0%{?fedora} == 28
-BuildRequires: pkgconfig(libmutter-2) >= 3.18.0
+BuildRequires: pkgconfig(libmutter-2) >= 3.28.0
 %endif
 %if 0%{?fedora} >= 29
-BuildRequires: pkgconfig(libmutter-3) >= 3.18.0
+BuildRequires: pkgconfig(libmutter-3) >= 3.30.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
-BuildRequires: pkgconfig(upower-glib) >= 0.9.20
+BuildRequires: pkgconfig(upower-glib) >= 0.99.0
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(xtst)
 
-BuildRequires: vala >= 0.28
+BuildRequires: vala >= 0.40.0
 BuildRequires: git
 BuildRequires: meson
 BuildRequires: intltool
@@ -82,6 +83,7 @@ Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 
 Requires: %{name}-libs
+Requires: %{name}-plugins-core
 Requires: %{name}-schemas
 Requires: %{name}-rundialog
 
@@ -95,33 +97,43 @@ the user. It features heavy integration with the GNOME stack in order
 for an enhanced experience.
 
 
-%package    rundialog
-Summary:    Budgie Run Dialog for the Budgie Desktop
-Requires:   %{name}-libs%{?_isa} = %{version}-%{release}
-Requires:   %{name}-schemas%{?_isa} = %{version}-%{release}
+%package        plugins-core
+Summary:        Core plugins for the Budgie Desktop
+Requires:       gtk3 >= 3.22.0
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-schemas%{?_isa} = %{version}-%{release}
+
+%description    plugins-core
+This package contains the core plugins of Budgie Desktop.
+
+
+%package        rundialog
+Summary:        Budgie Run Dialog for the Budgie Desktop
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-schemas%{?_isa} = %{version}-%{release}
 
 %description    rundialog
 Budgie Run Dialog for the Budgie Desktop
 
 
-%package    libs
-Summary:    Common libs for the Budgie Desktop
-Requires:   gtk3 >= 3.18.0
+%package        libs
+Summary:        Common libs for the Budgie Desktop
+Requires:       gtk3 >= 3.22.0
 
 %description    libs
-Common libs for the BUdgie Desktop
+This package contains the shared library of Budgie Desktop.
 
 
-%package    schemas
-Summary:    GLib schemas for the Budgie Desktop
+%package        schemas
+Summary:        GLib schemas for the Budgie Desktop
 
 %description    schemas
 GLib schemas for the Budgie Desktop
 
 
-%package    docs
-Summary:    GTK3 Desktop Environment -- Documentation files
-Group:      Documentation/HTML
+%package        docs
+Summary:        GTK3 Desktop Environment -- Documentation files
+Group:          Documentation/HTML
 
 %description    docs
 GTK3 Desktop Environment -- Documentation files.
@@ -129,12 +141,12 @@ This package provides API Documentation for the Budgie Plugin API, in the
 GTK-Doc HTML format.
 
 
-%package    devel
-Summary:    Development files for the Budgoe Desktop
-Requires:   %{name}%{?_isa} = %{version}-%{release}
+%package        devel
+Summary:        Development files for the Budgoe Desktop
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
-Development files for the Budgie Desktop
+This package contains the files required for developing for Budgie Desktop.
 
 
 %prep
@@ -151,6 +163,8 @@ fi
 %endif
 %patch1 -p1
 %patch3 -p1
+%patch5 -p1
+
 
 %build
 export LC_ALL=en_US.utf8
@@ -161,6 +175,7 @@ export LC_ALL=en_US.utf8
 %endif
 %meson_build
 
+
 %install
 export LC_ALL=en_US.utf8
 %meson_install
@@ -168,31 +183,19 @@ find %{buildroot} -name '*.la' -delete
 
 %find_lang %{name}
 
-%post
-/sbin/ldconfig
-/bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
-%postun
-/sbin/ldconfig
-if [ $1 -eq 0 ]; then
-    /usr/bin/glib-compile-schemas %{_datadir}/glib-2/schemas &> /dev/null || :
-    /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null
-    /usr/bin/update-desktop-database &> /dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-fi
+%check
+desktop-file-validate %{buildroot}/%{_datadir}/applications/budgie-*.desktop
 
-%posttrans
-/usr/bin/glib-compile-schemas %{_datadir}/glib-2/schemas &> /dev/null || :
-/usr/bin/update-desktop-database &> /dev/null
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+
+%ldconfig_scriptlets libs
+
 
 %files -f %{name}.lang
 %doc README.md
 %license LICENSE LICENSE.LGPL2.1
 %{_bindir}/budgie-*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/budgie-desktop-*.desktop
-%{_libdir}/budgie-desktop/
-%{_libdir}/girepository-1.0/Budgie*.typelib
 %{_datadir}/applications/budgie-*.desktop
 %{_datadir}/gnome-session/sessions/budgie-desktop.session
 %{_datadir}/icons/hicolor/scalable/apps/budgie-desktop-symbolic.svg
@@ -218,6 +221,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/status/num-lock-symbolic.svg
 %{_datadir}/xsessions/budgie-desktop.desktop
 
+%files plugins-core
+%{_libdir}/budgie-desktop/*
+
 %files schemas
 %{_datadir}/glib-2.0/schemas/com.solus-project.*.gschema.xml
 %if 0%{?fedora} >= 29
@@ -225,8 +231,16 @@ fi
 %endif
 
 %files libs
-%{_libdir}/libbudgie*.so.*
-%{_libdir}/libraven*.so.*
+%dir %{_libdir}/budgie-desktop
+%{_libdir}/libbudgietheme.so.0
+%{_libdir}/libbudgietheme.so.0.0.0
+%{_libdir}/libbudgie-plugin.so.0
+%{_libdir}/libbudgie-plugin.so.0.0.0
+%{_libdir}/libbudgie-private.so.0
+%{_libdir}/libbudgie-private.so.0.0.0
+%{_libdir}/libraven.so.0
+%{_libdir}/libraven.so.0.0.0
+%{_libdir}/girepository-1.0/Budgie*.typelib
 
 %files rundialog
 %{_bindir}/budgie-run-dialog
@@ -237,11 +251,26 @@ fi
 %files devel
 %{_includedir}/budgie-desktop/
 %{_libdir}/pkgconfig/budgie*.pc
-%{_libdir}/lib*.so
+%{_libdir}/libbudgietheme.so
+%{_libdir}/libbudgie-plugin.so
+%{_libdir}/libbudgie-private.so
+%{_libdir}/libraven.so
 %{_datadir}/gir-1.0/Budgie-1.0.gir
 %{_datadir}/vala/vapi/budgie-1.0.*
 
+
 %changelog
+* Tue Sep 18 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180918.cb35f5b-5
+- [PATCH] Fix errors were caused by desktop-file-validate
+- drop F25 and F26 support
+- update build dependecies
+- move all plugins to new package budgie-desktop-plugins-core
+- handle installed files correctly (i guess)
+- use ldconfig_scriptlets macro instead
+
+* Thu Sep 13 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180913.cb35f5b-4
+- [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes #1047"
+
 * Thu Sep 13 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180913.cb35f5b-4
 - fix window button-layout issue
 
