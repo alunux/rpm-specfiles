@@ -1,0 +1,101 @@
+From b0fdff56533c1ae34011e5e68178bb0dd90f5b14 Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Fri, 31 Aug 2018 14:51:21 +0700
+Subject: [PATCH] Drop default value of non-automatic property
+
+---
+ src/applets/icon-tasklist/Icon.vala    | 8 +++-----
+ src/applets/status/PowerIndicator.vala | 1 -
+ src/panel/panel.vala                   | 1 -
+ src/raven/headerwidget.vala            | 1 -
+ src/raven/raven.vala                   | 1 -
+ 5 files changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/src/applets/icon-tasklist/Icon.vala b/src/applets/icon-tasklist/Icon.vala
+index 895cd38c..e902e2c1 100644
+--- a/src/applets/icon-tasklist/Icon.vala
++++ b/src/applets/icon-tasklist/Icon.vala
+@@ -20,8 +20,9 @@ public class Icon : Gtk.Image
+     private int wait_cycle_counter = 0;
+     private int attention_cycle_counter = 0;
+ 
+-    private double bounce_amount = 0;
+-    private double attention_amount = 0;
++    private double bounce_amount = 0.0;
++    private double attention_amount = 0.0;
++    private double opacity = 1.0;
+ 
+     public double bounce {
+         public set {
+@@ -31,7 +32,6 @@ public class Icon : Gtk.Image
+         public get {
+             return bounce_amount;
+         }
+-        default = 0.0;
+     }
+ 
+     public double attention {
+@@ -42,7 +42,6 @@ public class Icon : Gtk.Image
+         public get {
+             return attention_amount;
+         }
+-        default = 0.0;
+     }
+ 
+     public double icon_opacity {
+@@ -56,7 +55,6 @@ public class Icon : Gtk.Image
+         public get {
+             return opacity;
+         }
+-        default = 1.0;
+     }
+ 
+     public Icon() {}
+diff --git a/src/applets/status/PowerIndicator.vala b/src/applets/status/PowerIndicator.vala
+index 1816a294..43723d90 100644
+--- a/src/applets/status/PowerIndicator.vala
++++ b/src/applets/status/PowerIndicator.vala
+@@ -30,7 +30,6 @@ public class BatteryIcon : Gtk.Box
+         public get {
+             return this.percent_label.visible;
+         }
+-        default = false;
+     }
+ 
+     public BatteryIcon(Up.Device battery) {
+diff --git a/src/panel/panel.vala b/src/panel/panel.vala
+index 17bd9431..25c89f99 100644
+--- a/src/panel/panel.vala
++++ b/src/panel/panel.vala
+@@ -120,7 +120,6 @@ public class Panel : Budgie.Toplevel
+         public get {
+             return render_scale;
+         }
+-        default = 0.0;
+     }
+ 
+     public bool activate_action(int remote_action)
+diff --git a/src/raven/headerwidget.vala b/src/raven/headerwidget.vala
+index 429c350c..be2e80bc 100644
+--- a/src/raven/headerwidget.vala
++++ b/src/raven/headerwidget.vala
+@@ -34,7 +34,6 @@ public class HeaderExpander : Gtk.Button
+         public get {
+             return this._expanded;
+         }
+-        default = false;
+     }
+ 
+     public HeaderExpander(HeaderWidget? owner)
+diff --git a/src/raven/raven.vala b/src/raven/raven.vala
+index 23250d52..d1ad8cfe 100644
+--- a/src/raven/raven.vala
++++ b/src/raven/raven.vala
+@@ -170,7 +170,6 @@ public class Raven : Gtk.Window
+         public get {
+             return this._screen_edge;
+         }
+-        default = Gtk.PositionType.RIGHT;
+     }
+ 
+     int our_width = 0;

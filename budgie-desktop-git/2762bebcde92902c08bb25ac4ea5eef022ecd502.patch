@@ -1,0 +1,118 @@
+From 2762bebcde92902c08bb25ac4ea5eef022ecd502 Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Tue, 18 Sep 2018 11:01:07 +0700
+Subject: [PATCH] Fix errors were caused by desktop-file-validate
+
+Currently, Budgie is not registered on freedesktop menu spec.
+---
+ src/daemon/budgie-daemon.desktop.in               | 2 +-
+ src/panel/budgie-desktop-settings.desktop.in      | 2 +-
+ src/panel/budgie-panel.desktop.in                 | 2 +-
+ src/polkit/budgie-polkit.desktop.in               | 2 +-
+ src/session/budgie-desktop-nm-applet.desktop.in   | 2 +-
+ src/session/budgie-desktop-screensaver.desktop.in | 2 +-
+ src/session/budgie-desktop.desktop.in.in          | 2 +-
+ src/session/budgie-desktop.in                     | 2 +-
+ src/wm/budgie-wm.desktop.in                       | 2 +-
+ 9 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/src/daemon/budgie-daemon.desktop.in b/src/daemon/budgie-daemon.desktop.in
+index dd144dbd..04c12516 100644
+--- a/src/daemon/budgie-daemon.desktop.in
++++ b/src/daemon/budgie-daemon.desktop.in
+@@ -10,4 +10,4 @@ StartupNotify=true
+ X-GNOME-AutoRestart=true
+ X-GNOME-Autostart-Notify=true
+ X-GNOME-Autostart-Phase=Desktop
+-OnlyShowIn=Budgie
++OnlyShowIn=X-Budgie
+diff --git a/src/panel/budgie-desktop-settings.desktop.in b/src/panel/budgie-desktop-settings.desktop.in
+index 1c0f788d..3d77f871 100644
+--- a/src/panel/budgie-desktop-settings.desktop.in
++++ b/src/panel/budgie-desktop-settings.desktop.in
+@@ -7,5 +7,5 @@ TryExec=budgie-desktop-settings
+ Terminal=false
+ Type=Application
+ Categories=GNOME;GTK;System;
+-OnlyShowIn=Budgie;
++OnlyShowIn=X-Budgie;
+ StartupWMClass=budgie-desktop-settings
+diff --git a/src/panel/budgie-panel.desktop.in b/src/panel/budgie-panel.desktop.in
+index 3582d2cd..5006b701 100644
+--- a/src/panel/budgie-panel.desktop.in
++++ b/src/panel/budgie-panel.desktop.in
+@@ -11,4 +11,4 @@ X-GNOME-AutoRestart=false
+ X-GNOME-Autostart-Notify=true
+ X-GNOME-Autostart-Phase=Panel
+ X-GNOME-Provides=panel
+-OnlyShowIn=Budgie;
++OnlyShowIn=X-Budgie;
+diff --git a/src/polkit/budgie-polkit.desktop.in b/src/polkit/budgie-polkit.desktop.in
+index 17be847a..d264cc79 100644
+--- a/src/polkit/budgie-polkit.desktop.in
++++ b/src/polkit/budgie-polkit.desktop.in
+@@ -10,4 +10,4 @@ StartupNotify=true
+ X-GNOME-AutoRestart=true
+ X-GNOME-Autostart-Notify=true
+ X-GNOME-Autostart-Phase=Desktop
+-OnlyShowIn=Budgie
++OnlyShowIn=X-Budgie
+diff --git a/src/session/budgie-desktop-nm-applet.desktop.in b/src/session/budgie-desktop-nm-applet.desktop.in
+index 8e84c59a..b0377005 100644
+--- a/src/session/budgie-desktop-nm-applet.desktop.in
++++ b/src/session/budgie-desktop-nm-applet.desktop.in
+@@ -7,7 +7,7 @@ TryExec=nm-applet
+ Terminal=false
+ Type=Application
+ NoDisplay=true
+-OnlyShowIn=Budgie;
++OnlyShowIn=X-Budgie;
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+ X-GNOME-Bugzilla-Product=NetworkManager
+ X-GNOME-Bugzilla-Component=nm-applet
+diff --git a/src/session/budgie-desktop-screensaver.desktop.in b/src/session/budgie-desktop-screensaver.desktop.in
+index 490f97d8..49f265c4 100644
+--- a/src/session/budgie-desktop-screensaver.desktop.in
++++ b/src/session/budgie-desktop-screensaver.desktop.in
+@@ -5,7 +5,7 @@ Comment=Launch screensaver and locker program
+ Icon=preferences-desktop-screensaver
+ Exec=gnome-screensaver
+ TryExec=gnome-screensaver
+-OnlyShowIn=Budgie;
++OnlyShowIn=X-Budgie;
+ NoDisplay=true
+ X-GNOME-Autostart-Phase=Application
+ X-GNOME-Autostart-Notify=true
+diff --git a/src/session/budgie-desktop.desktop.in.in b/src/session/budgie-desktop.desktop.in.in
+index 76ed710d..8529ab41 100644
+--- a/src/session/budgie-desktop.desktop.in.in
++++ b/src/session/budgie-desktop.desktop.in.in
+@@ -5,4 +5,4 @@ Exec=@prefix@/bin/budgie-desktop
+ TryExec=@prefix@/bin/budgie-desktop
+ Icon=
+ Type=Application
+-DesktopNames=Budgie;GNOME
++DesktopNames=X-Budgie;GNOME
+diff --git a/src/session/budgie-desktop.in b/src/session/budgie-desktop.in
+index 18fee9ff..3ba53889 100755
+--- a/src/session/budgie-desktop.in
++++ b/src/session/budgie-desktop.in
+@@ -9,7 +9,7 @@ if [ "$1" = "--version" ]; then
+ fi
+ 
+ if [ -z $XDG_CURRENT_DESKTOP ]; then
+-  XDG_CURRENT_DESKTOP=Budgie:GNOME
++  XDG_CURRENT_DESKTOP=X-Budgie:GNOME
+   export XDG_CURRENT_DESKTOP
+ fi
+ 
+diff --git a/src/wm/budgie-wm.desktop.in b/src/wm/budgie-wm.desktop.in
+index 8cab3063..737bff32 100644
+--- a/src/wm/budgie-wm.desktop.in
++++ b/src/wm/budgie-wm.desktop.in
+@@ -9,4 +9,4 @@ X-GnomeWMSettingsLibrary=metacity
+ X-GNOME-Autostart-Phase=WindowManager
+ X-GNOME-Provides=windowmanager
+ X-GNOME-Autostart-Notify=true
+-OnlyShowIn=Budgie;
++OnlyShowIn=X-Budgie;

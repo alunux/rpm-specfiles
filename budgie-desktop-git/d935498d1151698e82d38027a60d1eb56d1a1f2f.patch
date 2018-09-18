@@ -1,0 +1,21 @@
+From d935498d1151698e82d38027a60d1eb56d1a1f2f Mon Sep 17 00:00:00 2001
+From: "La Ode Muh. Fadlun Akbar" <fadlun.net@gmail.com>
+Date: Thu, 13 Sep 2018 04:31:48 +0700
+Subject: [PATCH] temporary solution for window button layout
+
+---
+ src/daemon/settings.vala | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/daemon/settings.vala b/src/daemon/settings.vala
+index fcf7807b..9529c3ac 100644
+--- a/src/daemon/settings.vala
++++ b/src/daemon/settings.vala
+@@ -114,6 +114,7 @@ public class SettingsManager
+             break;
+         }
+         this.xoverrides.set_value("overrides", xset);
++        this.gnome_wm_settings.set_value("button-layout", wm_set);
+     }
+ 
+     /**

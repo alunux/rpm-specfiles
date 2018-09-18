@@ -16,20 +16,27 @@ Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{n
 
 ############## List of patches ##############
 
-# [PATCH] Port to mutter-3 from GNOME 3.30
-Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
 # [PATCH] Drop default value of non-automatic property
-Patch1:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
-# [PATCH] Correct GNOME button-layout schema path
-Patch2:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
+Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
 # [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
-Patch3:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
-# [PATCH] temporary solution for window button layout
-Patch4:  0001-temporary-solution-for-window-button-layout.patch
+Patch1:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 # [PATCH] Fix errors were caused by desktop-file-validate
-Patch5:  https://github.com/alunux/budgie-desktop/commit/2762bebcde92902c08bb25ac4ea5eef022ecd502.patch
+Patch2:  https://github.com/alunux/budgie-desktop/commit/2762bebcde92902c08bb25ac4ea5eef022ecd502.patch
 
-############## End of patch list ##############
+############ Fedora 29 patches ##############
+# [PATCH] Port to mutter-3 from GNOME 3.30
+Patch10:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
+# [PATCH] Correct GNOME button-layout schema path
+Patch11:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
+# [PATCH] temporary solution for window button layout
+Patch12:  https://github.com/alunux/budgie-desktop/commit/d935498d1151698e82d38027a60d1eb56d1a1f2f.patch
+# [PATCH] Make sure vapi workspace def use real c header filenames
+Patch13:  https://github.com/UbuntuBudgie/budgie-desktop/commit/825353ea27af8ca2e54e95421072561a1bcfb488.patch
+# [PATCH] Point vapi cheaders to their upstream equiv
+Patch14:  https://github.com/UbuntuBudgie/budgie-desktop/commit/665076e68be7de280177eff45f224a7c2ea4a212.patch
+#### End of Fedora 29 patches ####
+
+############# End of patch list #############
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6.40
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -142,7 +149,7 @@ GTK-Doc HTML format.
 
 
 %package        devel
-Summary:        Development files for the Budgoe Desktop
+Summary:        Development files for the Budgie Desktop
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
@@ -156,14 +163,16 @@ if [ ! -d .git ]; then
     git config --local --bool core.bare false
     git reset --hard
 fi
-%if 0%{?fedora} >= 29
 %patch0 -p1
-%patch2 -p1
-%patch4 -p1
-%endif
 %patch1 -p1
-%patch3 -p1
-%patch5 -p1
+%patch2 -p1
+%if 0%{?fedora} >= 29
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%endif
 
 
 %build
@@ -231,7 +240,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/budgie-*.desktop
 %endif
 
 %files libs
-%dir %{_libdir}/budgie-desktop
+%{_libdir}/budgie-desktop/
 %{_libdir}/libbudgietheme.so.0
 %{_libdir}/libbudgietheme.so.0.0.0
 %{_libdir}/libbudgie-plugin.so.0
@@ -262,6 +271,8 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/budgie-*.desktop
 %changelog
 * Tue Sep 18 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180918.cb35f5b-5
 - [PATCH] Fix errors were caused by desktop-file-validate
+- [PATCH] Make sure vapi workspace def use real c header filenames
+- [PATCH] Point vapi cheaders to their upstream equiv
 - drop F25 and F26 support
 - update build dependecies
 - move all plugins to new package budgie-desktop-plugins-core
