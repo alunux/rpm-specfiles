@@ -1,13 +1,13 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 6cdd46e0661fa3ceb8d30b0fb993811f0a7059b1
+%global commit0 34d5895518016075ea6a99d87882643e7fb0acea
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-haste-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    1%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Haste Applet
 URL:        https://github.com/cybre/budgie-haste-applet
@@ -67,6 +67,9 @@ fi
 %{_datadir}/glib-2.0/schemas/com.github.cybre.%{name}.gschema.xml
 
 %changelog
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181031.34d5895-1
+- built from 34d5895518016075ea6a99d87882643e7fb0acea
+
 * Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.6cdd46e-2
 - rebuild
 

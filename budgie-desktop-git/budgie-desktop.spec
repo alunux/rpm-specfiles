@@ -1,39 +1,27 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 cb35f5b4f1c71d8dfa3aa8f78298b3825ce85cc2
+%global commit0 5c97692195a540bfd2973d185f01fb2e716da6e9
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:    budgie-desktop
 Version: %{build_timestamp}.%{shortcommit0}
-Release: 5%{?dist}
+Release: 1%{?dist}
 License: GPLv2 and LGPLv2.1
 Summary: An elegant desktop with GNOME integration
 URL:     https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Source1: https://github.com/UbuntuBudgie/%{name}/archive/mutter330reduxII.tar.gz#/%{name}-mutter330reduxII.tar.gz
 
 ############## List of patches ##############
-
-# [PATCH] Drop default value of non-automatic property
-Patch0:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1555.patch
-# [PATCH] Revert "Apply fossfreedom's 3.18 fixes, which in turn fixes
-Patch1:  https://raw.githubusercontent.com/alunux/rpm-specfiles/master/budgie-desktop-stable/0001-Revert-Apply-fossfreedom-s-3.18-fixes-which-in-turn-.patch
 # [PATCH] Fix errors were caused by desktop-file-validate
-Patch2:  https://github.com/alunux/budgie-desktop/commit/2762bebcde92902c08bb25ac4ea5eef022ecd502.patch
+Patch0:  https://github.com/alunux/budgie-desktop/commit/2762bebcde92902c08bb25ac4ea5eef022ecd502.patch
 
 ############ Fedora 29 patches ##############
-# [PATCH] Port to mutter-3 from GNOME 3.30
-Patch10:  https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1523.patch
-# [PATCH] Correct GNOME button-layout schema path
-Patch11:  https://github.com/UbuntuBudgie/budgie-desktop/commit/b5e9fd36860d70fed8c85737d1bae828d5331b6b.patch
-# [PATCH] temporary solution for window button layout
-Patch12:  https://github.com/alunux/budgie-desktop/commit/d935498d1151698e82d38027a60d1eb56d1a1f2f.patch
-# [PATCH] Make sure vapi workspace def use real c header filenames
-Patch13:  https://github.com/UbuntuBudgie/budgie-desktop/commit/825353ea27af8ca2e54e95421072561a1bcfb488.patch
-# [PATCH] Point vapi cheaders to their upstream equiv
-Patch14:  https://github.com/UbuntuBudgie/budgie-desktop/commit/665076e68be7de280177eff45f224a7c2ea4a212.patch
+# GNOME 3.30 compatability patch
+#Patch11: https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1591.patch
 #### End of Fedora 29 patches ####
 
 ############# End of patch list #############
@@ -49,6 +37,7 @@ BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.44.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
 BuildRequires: pkgconfig(ibus-1.0) >= 1.5.11
 BuildRequires: pkgconfig(libgnome-menu-3.0) >= 3.10.3
+BuildRequires: pkgconfig(libnotify) >= 0.7
 BuildRequires: pkgconfig(libpeas-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpeas-gtk-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpulse) >= 2
@@ -71,6 +60,7 @@ BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(xtst)
+BuildRequires: pkgconfig(alsa)
 
 BuildRequires: vala >= 0.40.0
 BuildRequires: git
@@ -78,6 +68,7 @@ BuildRequires: meson
 BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: sassc
+BuildRequires: desktop-file-utils
 
 Requires: hicolor-icon-theme
 Requires: gnome-session
@@ -157,22 +148,25 @@ This package contains the files required for developing for Budgie Desktop.
 
 
 %prep
-%setup -q -n %{name}-%{commit0}
+%if 0%{?fedora} < 29
+%setup -q -T -b 0 -n %{name}-%{commit0}
 if [ ! -d .git ]; then
     git clone --bare --depth 1 https://github.com/solus-project/budgie-desktop.git .git
     git config --local --bool core.bare false
     git reset --hard
 fi
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%if 0%{?fedora} >= 29
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
+%else
+%setup -q -T -b 1 -n %{name}-mutter330reduxII
+if [ ! -d .git ]; then
+    git clone --single-branch --branch mutter330reduxII --bare --depth 1 https://github.com/UbuntuBudgie/budgie-desktop.git .git
+    git config --local --bool core.bare false
+    git reset --hard
+fi
 %endif
+%patch0 -p1
+# %if 0%{?fedora} >= 29
+# %patch11 -p1
+# %endif
 
 
 %build
@@ -218,6 +212,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/budgie-*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/clock-applet-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/icon-task-list-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/notifications-applet-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/actions/notification-disabled-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/separator-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/spacer-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/system-tray-symbolic.svg
@@ -269,6 +264,31 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/budgie-*.desktop
 
 
 %changelog
+* Wed Feb 13 2019 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20190213.5c97692-1
+- build from commit 5c97692195a540bfd2973d185f01fb2e716da6e9
+
+* Tue Jan 01 2019 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20190101.3dda224-1
+- build from commit 3dda224e130dd62b7c7d3d94bc83b320991204c5
+
+* Tue Dec 18 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181218.16b501a-1
+- build from commit 16b501aa6329a8d4bfc814e75e703f470d7efc65
+
+* Fri Nov 30 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181130.8b6f241-1
+- build from commit 8b6f2414a3b6c44f09ddd67fbe9e03f5b28e589e
+
+* Thu Nov 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181122.deb7707-1
+- build from commit deb7707ff977d88750fd1e4e27d9c51375d062da
+
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181031.6f75bbd-1
+- build from commit 6f75bbd33b46015a13001f9ba379bf08d240f519
+
+* Wed Oct 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181010.125637b-1
+- [PATCH] Revert "Implement screenshot functionality leveraging GNOME Screenshot."
+
+* Tue Oct 09 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181009.125637b-1
+- [PATCH] GNOME 3.30 compatability patch
+- drop GNOME 3.30 obselete patch
+
 * Tue Sep 18 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180918.cb35f5b-5
 - [PATCH] Fix errors were caused by desktop-file-validate
 - [PATCH] Make sure vapi workspace def use real c header filenames

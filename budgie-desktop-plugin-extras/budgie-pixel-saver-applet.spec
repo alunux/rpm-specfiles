@@ -7,7 +7,7 @@
 
 Name:       budgie-pixel-saver-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    3%{?dist}
+Release:    4%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Pixel Saver
 URL:        https://github.com/ilgarmehmetali/budgie-pixel-saver-applet
@@ -71,6 +71,9 @@ fi
 %{_datadir}/glib-2.0/schemas/net.milgar.budgie-pixel-saver.gschema.xml
 
 %changelog
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181031.30c1f94-4
+- rebuilt
+
 * Sat Sep 15 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180915.30c1f94-3
 - patch: Set no relief to window control button
 

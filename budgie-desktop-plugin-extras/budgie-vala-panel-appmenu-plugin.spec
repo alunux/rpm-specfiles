@@ -2,12 +2,13 @@
 
 Name:    budgie-vala-panel-appmenu-plugin
 Version: 0.7.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: LGPL-3.0+
 Summary: This package provides Application Menu plugin for Budgie Desktop
 URL:     https://gitlab.com/vala-panel-project/vala-panel-appmenu
 
 Source0: https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/c0f85b42a2a228ad8c3413357e02fb28/vala-panel-appmenu-0.7.1.tar.xz
+Patch0:  0001-Fix-cmake-issue.patch
 
 BuildRequires: bamf-daemon
 BuildRequires: cmake >= 2.8.0
@@ -217,7 +218,7 @@ rm -rf %{buildroot}
 
 %files -n libappmenu-gtk2-parser
 %license LICENSE*
-%{_libdir}/libappmenu-gtk2-parser.so.0*
+%{_libdir}/libappmenu-gtk2-parser.so.*
 
 %files -n libappmenu-gtk2-parser-devel
 %{_libdir}/libappmenu-gtk2-parser.so
@@ -225,7 +226,7 @@ rm -rf %{buildroot}
 
 %files -n libappmenu-gtk3-parser
 %license LICENSE
-%{_libdir}/libappmenu-gtk3-parser.so.0*
+%{_libdir}/libappmenu-gtk3-parser.so.*
 
 %files -n libappmenu-gtk3-parser-devel
 %{_libdir}/libappmenu-gtk3-parser.so
@@ -249,6 +250,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/profile.d/appmenu-qt5ct.*
 
 %changelog
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.1-2
+- rebuilt
+
 * Mon Sep 10 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.1-1
 - update to 0.7.1
 

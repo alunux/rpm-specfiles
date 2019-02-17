@@ -1,19 +1,19 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 0cad740849549281e63c870a80e7e021fc2a50c8
+%global commit0 2372b25aaa1395c958db61fecff4d0c2c23b8a0f
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-brightness-control-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    1%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Brightness Control Applet
 URL:        https://github.com/ilgarmehmetali/budgie-brightness-control-applet
 
 Source0: https://github.com/ilgarmehmetali/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch1:  0002-fix-gsd-backlight-helper-path-on-fedora.patch
+Patch1:  0001-fix-gsd-backlight-helper-path-on-fedora.patch
 
 BuildRequires: pkgconfig(budgie-1.0) >= 2
 BuildRequires: pkgconfig(glib-2.0)
@@ -66,6 +66,9 @@ fi
 %{_libdir}/budgie-desktop/plugins/%{name}/
 
 %changelog
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181031.2372b25-1
+- built from 2372b25aaa1395c958db61fecff4d0c2c23b8a0f
+
 * Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.0cad740-2
 - rebuild
 

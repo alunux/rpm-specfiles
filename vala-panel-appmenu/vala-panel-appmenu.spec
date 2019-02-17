@@ -8,6 +8,7 @@ Summary: This package provides Application Menu plugin for vala-panel
 URL:     https://gitlab.com/vala-panel-project/vala-panel-appmenu
 
 Source0: https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/c0f85b42a2a228ad8c3413357e02fb28/vala-panel-appmenu-0.7.1.tar.xz
+Patch0:  0001-Fix-cmake-issue.patch
 
 BuildRequires: bamf-daemon
 BuildRequires: cmake >= 2.8.0
@@ -197,8 +198,8 @@ EOF
 
 %build
 %cmake -DGSETTINGS_COMPILE=OFF -DENABLE_XFCE=ON -DENABLE_VALAPANEL=OFF \
-       -DENABLE_BUDGIE=OFF -DENABLE_MATE=ON -DENABLE_UNITY_GTK_MODULE=ON \
-       -DMAKE_BOLD_APPNAME=ON
+       -DENABLE_BUDGIE=OFF -DENABLE_MATE=ON -DENABLE_APPMENU_GTK_MODULE=ON \
+       -DMAKE_BOLD_APPNAME=ON -DENABLE_JAYATANA=OFF
 %make_build
 
 %install
@@ -260,9 +261,8 @@ rm -rf %{buildroot}
 %{_userunitdir}/default.target.wants/%{name}.service
 
 %files -n mate-vala-panel-appmenu-plugin
-%{_datadir}/dbus-1/services/org.mate.panel.applet.AppmenuAppletFactory.service
+%{_libdir}/mate-panel/libappmenu-mate.so
 %{_datadir}/mate-panel/applets/org.vala-panel.appmenu.mate-panel-applet
-%{_libexecdir}/mate-panel/appmenu-mate
 
 %files -n xfce4-vala-panel-appmenu-plugin
 %{_libdir}/xfce4/panel/plugins/libappmenu-xfce.so
@@ -273,7 +273,7 @@ rm -rf %{buildroot}
 
 %files -n libappmenu-gtk2-parser
 %license LICENSE*
-%{_libdir}/libappmenu-gtk2-parser.so.0*
+%{_libdir}/libappmenu-gtk2-parser.so.*
 
 %files -n libappmenu-gtk2-parser-devel
 %{_libdir}/libappmenu-gtk2-parser.so
@@ -281,7 +281,7 @@ rm -rf %{buildroot}
 
 %files -n libappmenu-gtk3-parser
 %license LICENSE
-%{_libdir}/libappmenu-gtk3-parser.so.0*
+%{_libdir}/libappmenu-gtk3-parser.so.*
 
 %files -n libappmenu-gtk3-parser-devel
 %{_libdir}/libappmenu-gtk3-parser.so

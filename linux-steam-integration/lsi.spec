@@ -3,11 +3,12 @@
 
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
-Version: 0.7.2
-Release: 3%{?dist}
+Version: 0.7.3
+Release: 1%{?dist}
 License: LGPLv2.1
-URL:     https://github.com/solus-project/linux-steam-integration
+URL:     https://github.com/clearlinux/linux-steam-integration
 
+BuildRequires: gcc
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: meson
 BuildRequires: gettext
@@ -174,8 +175,10 @@ Requires: trousers-lib(x86-32)
 Requires: %{name}-libs(x86-64)
 Requires: %{name}-libs(x86-32)
 
-Source0: https://github.com/solus-project/linux-steam-integration/releases/download/v%{version}/linux-steam-integration-%{version}.tar.xz
+Source0: https://github.com/clearlinux/linux-steam-integration/releases/download/v%{version}/linux-steam-integration-%{version}.tar.xz
+%if 0%{?fedora} >= 28
 Patch0:  0001-intercept-Handle-override-of-libva.so.1-libva.so.2-l.patch
+%endif
 
 %description
 A helper shim to enable better Steam* integration on Linux systems. This is part
@@ -231,7 +234,24 @@ export LC_ALL=en_US.utf8
 %{_libdir}/liblsi-redirect.so
 
 %changelog
-* Mon May 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-3
+* Wed Jan 16 2019 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.3-1
+- update to 0.7.3
+- change upstream URL to https://github.com/clearlinux/linux-steam-integration
+
+* Sun Nov 04 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-7
+- keep using NetworkManager-glib (steam hard dependency)
+- don't intercept libva on fedora < 28
+
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-6
+- Subtituted NetworkManager-glib to NetworkManager-libnm
+
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-5
+- add gcc to BuildRequires
+
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-4
+- rebuilt
+
+* Tue May 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-3
 - fix libva and libva-x11 ABI bump
 
 * Sun Apr 29 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 0.7.2-2

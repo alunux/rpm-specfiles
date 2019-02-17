@@ -1,13 +1,13 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 0eefbe239219912d138f06d98a4f865bb31196b9
+%global commit0 f1ecff655d0b6ecdb81db478f34cdebd97f70268
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
 Name:       budgie-screenshot-applet
 Version:    %{build_timestamp}.%{shortcommit0}
-Release:    2%{?dist}
+Release:    1%{?dist}
 License:    GPL-2.0
 Summary:    Budgie Screenshot Applet
 URL:        https://github.com/cybre/budgie-screenshot-applet
@@ -73,6 +73,9 @@ fi
 
 
 %changelog
+* Wed Oct 31 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20181031.f1ecff6-1
+- built from f1ecff655d0b6ecdb81db478f34cdebd97f70268
+
 * Sun Apr 22 2018 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20180422.0eefbe2-2
 - rebuild
 
