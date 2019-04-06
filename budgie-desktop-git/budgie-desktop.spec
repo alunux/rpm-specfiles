@@ -49,8 +49,11 @@ BuildRequires: pkgconfig(libmutter-1) >= 3.26.0
 %if 0%{?fedora} == 28
 BuildRequires: pkgconfig(libmutter-2) >= 3.28.0
 %endif
-%if 0%{?fedora} >= 29
+%if 0%{?fedora} == 29
 BuildRequires: pkgconfig(libmutter-3) >= 3.30.0
+%endif
+%if 0%{?fedora} >= 30
+BuildRequires: pkgconfig(libmutter-4) >= 3.32.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
