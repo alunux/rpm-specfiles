@@ -4,7 +4,7 @@
 Summary: Linux Steam Integration (LSI)
 Name:    linux-steam-integration
 Version: 0.7.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: LGPLv2.1
 URL:     https://github.com/clearlinux/linux-steam-integration
 
@@ -179,6 +179,8 @@ Source0: https://github.com/clearlinux/linux-steam-integration/releases/download
 %if 0%{?fedora} >= 28
 Patch0:  0001-intercept-Handle-override-of-libva.so.1-libva.so.2-l.patch
 %endif
+Patch1:  https://github.com/getsolus/linux-steam-integration/commit/cce5b5b142aa0058077c233e48dd4c16d607f660.patch
+Patch2:  https://github.com/getsolus/linux-steam-integration/commit/9759e21ee379ca2f7c6a267b95c76e0e68dc724e.patch
 
 %description
 A helper shim to enable better Steam* integration on Linux systems. This is part

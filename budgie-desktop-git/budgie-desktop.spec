@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 5c97692195a540bfd2973d185f01fb2e716da6e9
+%global commit0 d80b745bd25489751b0290050566b388598b4271
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -13,18 +13,9 @@ Summary: An elegant desktop with GNOME integration
 URL:     https://github.com/solus-project/budgie-desktop
 
 Source0: https://github.com/solus-project/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Source1: https://github.com/UbuntuBudgie/%{name}/archive/mutter330reduxII.tar.gz#/%{name}-mutter330reduxII.tar.gz
 
-############## List of patches ##############
 # [PATCH] Fix errors were caused by desktop-file-validate
 Patch0:  https://github.com/alunux/budgie-desktop/commit/2762bebcde92902c08bb25ac4ea5eef022ecd502.patch
-
-############ Fedora 29 patches ##############
-# GNOME 3.30 compatability patch
-#Patch11: https://patch-diff.githubusercontent.com/raw/solus-project/budgie-desktop/pull/1591.patch
-#### End of Fedora 29 patches ####
-
-############# End of patch list #############
 
 BuildRequires: pkgconfig(accountsservice) >= 0.6.40
 BuildRequires: pkgconfig(gio-2.0) >= 2.46.0
@@ -43,14 +34,14 @@ BuildRequires: pkgconfig(libpeas-gtk-1.0) >= 1.8.0
 BuildRequires: pkgconfig(libpulse) >= 2
 BuildRequires: pkgconfig(libpulse-mainloop-glib) >= 2
 BuildRequires: pkgconfig(libwnck-3.0) >= 3.14.0
-%if 0%{?fedora} == 27
-BuildRequires: pkgconfig(libmutter-1) >= 3.26.0
-%endif
 %if 0%{?fedora} == 28
 BuildRequires: pkgconfig(libmutter-2) >= 3.28.0
 %endif
-%if 0%{?fedora} >= 29
+%if 0%{?fedora} == 29
 BuildRequires: pkgconfig(libmutter-3) >= 3.30.0
+%endif
+%if 0%{?fedora} >= 30
+BuildRequires: pkgconfig(libmutter-4) >= 3.32.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -148,26 +139,13 @@ This package contains the files required for developing for Budgie Desktop.
 
 
 %prep
-%if 0%{?fedora} < 29
 %setup -q -T -b 0 -n %{name}-%{commit0}
 if [ ! -d .git ]; then
     git clone --bare --depth 1 https://github.com/solus-project/budgie-desktop.git .git
     git config --local --bool core.bare false
     git reset --hard
 fi
-%else
-%setup -q -T -b 1 -n %{name}-mutter330reduxII
-if [ ! -d .git ]; then
-    git clone --single-branch --branch mutter330reduxII --bare --depth 1 https://github.com/UbuntuBudgie/budgie-desktop.git .git
-    git config --local --bool core.bare false
-    git reset --hard
-fi
-%endif
 %patch0 -p1
-# %if 0%{?fedora} >= 29
-# %patch11 -p1
-# %endif
-
 
 %build
 export LC_ALL=en_US.utf8
