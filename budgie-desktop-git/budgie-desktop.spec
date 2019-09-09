@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 d80b745bd25489751b0290050566b388598b4271
+%global commit0 67769ea09299e57f3a4ceeb2223f642d86ecafcf
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -40,8 +40,11 @@ BuildRequires: pkgconfig(libmutter-2) >= 3.28.0
 %if 0%{?fedora} == 29
 BuildRequires: pkgconfig(libmutter-3) >= 3.30.0
 %endif
-%if 0%{?fedora} >= 30
+%if 0%{?fedora} == 30
 BuildRequires: pkgconfig(libmutter-4) >= 3.32.0
+%endif
+%if 0%{?fedora} >= 31
+BuildRequires: pkgconfig(libmutter-5) >= 3.34.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -242,6 +245,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/budgie-*.desktop
 
 
 %changelog
+* Mon Sep 09 2019 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20190909.67769ea-1
+- build from commit 67769ea09299e57f3a4ceeb2223f642d86ecafcf
+
 * Wed Feb 13 2019 La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com> - 20190213.5c97692-1
 - build from commit 5c97692195a540bfd2973d185f01fb2e716da6e9
 
