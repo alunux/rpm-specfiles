@@ -1,7 +1,7 @@
 %global _hardened_build 1
 %global _vpath_builddir build
 
-%global commit0 67769ea09299e57f3a4ceeb2223f642d86ecafcf
+%global commit0 b4bf150304b13bcd7ef0a8058f5b67042d5cf6f5
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %define build_timestamp %(date +"%Y%m%d")
 
@@ -43,8 +43,11 @@ BuildRequires: pkgconfig(libmutter-3) >= 3.30.0
 %if 0%{?fedora} == 30
 BuildRequires: pkgconfig(libmutter-4) >= 3.32.0
 %endif
-%if 0%{?fedora} >= 31
+%if 0%{?fedora} == 31
 BuildRequires: pkgconfig(libmutter-5) >= 3.34.0
+%endif
+%if 0%{?fedora} >= 32
+BuildRequires: pkgconfig(libmutter-6) >= 3.36.0
 %endif
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.110
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.110
@@ -63,6 +66,7 @@ BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: sassc
 BuildRequires: desktop-file-utils
+BuildRequires: mesa-libEGL-devel
 
 Requires: hicolor-icon-theme
 Requires: gnome-session
